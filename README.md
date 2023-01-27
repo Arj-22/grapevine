@@ -1,0 +1,1 @@
+A react native project, it runs in the usuall way - npm start in terminal 
