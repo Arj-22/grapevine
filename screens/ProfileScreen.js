@@ -1,9 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import styles from '../style';
 import {Text, View, TextInput, Button, Pressable, Image, ImageBackground} from 'react-native'; 
-import app from '../firebase';
-import { getAuth, onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
-import { useEffect, useState } from 'react';
+import { getAuth } from "firebase/auth";
 
 const ProfileScreen = ({navigation}) => {
 

@@ -5,14 +5,13 @@ import {Text, View, TextInput, Button, Pressable, Image, ImageBackground} from '
 const PostScreen = ({navigation}) => {
 
     return (
-
       <View style={styles.container}>
         <ImageBackground
           source={require("../assets/rm222-mind-22.jpg")}
           style={styles.background}
           >
             <View style={styles.containerInside}>
-            <Text style={styles.textLabel}>Your Posts</Text>
+            <Text style={styles.textLabel}>Post Something...</Text>
             <StatusBar style="auto" />
             </View>       
         </ImageBackground>
