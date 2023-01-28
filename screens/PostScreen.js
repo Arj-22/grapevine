@@ -14,7 +14,7 @@ import { getDatabase, ref, set, push} from "firebase/database";
 
 const PostScreen = ({navigation, route }) => {
 
-  const { uri } = route.params; 
+  let { uri } = route.params; 
   const [image, setImage] = useState(null);
   const [text, setText] = useState(""); 
   const db = getDatabase();
@@ -43,9 +43,10 @@ const PostScreen = ({navigation, route }) => {
     });
 
 
-    console.log(result.assets[0].uri);
+    //console.log(result.assets[0].uri);
 
     if (!result.canceled) {
+      route.params.uri = null;
       setImage(result.assets[0].uri);
     }
   }
@@ -60,7 +61,7 @@ const PostScreen = ({navigation, route }) => {
         <FontAwesome name="send" size={30} style={styles.postScreenIcons} />
       </Pressable>
   })
-  }, [route, image, text]) 
+  }, [image, route, text]) 
 
 
     return (
