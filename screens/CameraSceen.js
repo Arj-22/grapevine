@@ -36,7 +36,7 @@ const CameraScreen = ({navigation}) => {
       <View style={styles.container}>
             <Camera style={styles.camera} ref={(ref) => {camera = ref}}> 
                 <Pressable onPress={() =>{getPicture()}}>
-                    <Entypo name="circle" size={60} color="white" style={styles.cameraButton} />
+                    <Entypo name="circle" size={80} color="white" style={styles.cameraButton} />
                 </Pressable>
             </Camera>   
       </View>

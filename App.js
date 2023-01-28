@@ -54,7 +54,7 @@ export default function App() {
           options={{
             title: null,
             headerTransparent: true,
-            headerTintColor: '#000000'
+            headerTintColor: '#FFFFFF'
             
           }}
           />
