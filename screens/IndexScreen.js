@@ -15,11 +15,12 @@ const IndexScreen = ({navigation}) => {
   useEffect(() => {
     navigation.setOptions({
       headerRight: () => 
-      <Pressable onPress={ () => navigation.navigate("PostScreen")}>
+      <Pressable onPress={ () => navigation.navigate("PostScreen", {uri:null})}>
         <Ionicons name="add-circle-outline" size={34} color="black" />
       </Pressable>
   })
   }, []) 
+
 
   const Tab = createBottomTabNavigator(); 
 
@@ -28,7 +29,7 @@ const IndexScreen = ({navigation}) => {
       <Tab.Screen name="Feed" component={FeedScreen} 
       options={{
         title: "Feed", 
-        headerTransparent: true,
+        headerShown: false,
         tabBarActiveTintColor: "#4E0DD9",
         tabBarIcon:()=>(  
           <Image source={require("../assets/Home.png")} style={styles.tabIcon}/>

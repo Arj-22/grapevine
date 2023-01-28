@@ -5,6 +5,9 @@ import app from '../firebase';
 
 import {getAuth, createUserWithEmailAndPassword} from "firebase/auth"; 
 
+import { getDatabase, ref, set } from "firebase/database";
+
+
 
 import { useState, useEffect} from 'react';
 
@@ -20,11 +23,16 @@ const SignUp = ({navigation}) => {
     const [password, setPassword] = useState(""); 
     const [error, setError] = useState(""); 
     const auth = getAuth(app)
+    const db = getDatabase();
+
+
+
+
 
     useEffect(() =>{
       const unsubscribe = auth.onAuthStateChanged(user =>{
         if(user){
-          navigation.replace("HomeScreen"); 
+          navigation.replace("IndexScreen"); 
         }
       })
       return unsubscribe; 
@@ -34,12 +42,21 @@ const SignUp = ({navigation}) => {
     const handleSignUp = ()=>{
       createUserWithEmailAndPassword(auth, email, password).then((userCredential) =>{
         const user = userCredential.user; 
+        set(ref(db, 'users/' + user.uid), {
+          username: username,
+          firstName: firstName,
+          lastName: lastName,
+          email: email,
+        });
         console.log(user.email); 
       }).catch((error) =>{
         console.log(error.code); 
         setError("Form not filled out correctly"); 
       }); 
     }
+
+
+
 
 
     return (

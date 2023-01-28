@@ -25,7 +25,6 @@ const LoginScreen = ({navigation}) => {
     handleLogin = () =>{
       signInWithEmailAndPassword(auth, email, password).then((userCredentials) =>{
         const user = userCredentials.user; 
-        console.log(user.email); 
       }).catch((error) =>{
         console.log(error.code); 
         setError("Invalid Login Details"); 

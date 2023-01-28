@@ -1,5 +1,6 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import CameraScreen from './screens/CameraSceen';
 import IndexScreen from "./screens/IndexScreen"; 
 import LoginScreen from './screens/LoginScreen';
 import PostScreen from './screens/PostScreen'; 
@@ -40,6 +41,16 @@ export default function App() {
         <Stack.Screen
           name="PostScreen"
           component={PostScreen}
+          options={{
+            title: null,
+            headerTransparent: true,
+            headerTintColor: '#000000'
+            
+          }}
+          />
+        <Stack.Screen
+          name="CameraScreen"
+          component={CameraScreen}
           options={{
             title: null,
             headerTransparent: true,
