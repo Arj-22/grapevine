@@ -18,7 +18,7 @@ export default function App() {
           component={IndexScreen}
           options={{
             title: "Grapevine", 
-            headerTransparent: true
+            headerTransparent: false,
           }}
           />
         <Stack.Screen

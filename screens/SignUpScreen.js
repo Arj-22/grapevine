@@ -123,7 +123,6 @@ const SignUp = ({navigation}) => {
             style={styles.button} 
             onPress={() => {
               handleSignUp();
-              navigation.replace("HomeScreen")
               }}>
             <Text style={styles.buttonText}>Sign Up</Text>
           </Pressable>

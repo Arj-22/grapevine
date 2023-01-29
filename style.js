@@ -108,7 +108,8 @@ export default styles = StyleSheet.create({
     },
     postImagePreview:{
       flex: 1, 
-      alignSelf:'stretch'
+      alignSelf:'stretch',
+      borderRadius: 10,
     },     
     photoContainer: {
       flex:1,
@@ -116,7 +117,38 @@ export default styles = StyleSheet.create({
       justifyContent: 'flex-start',
       padding: 20, 
       marginBottom: 20,
+    },    
+    containerInsideFeed: {
+      alignItems: 'center',
+      justifyContent: 'flex-start',
+      padding: 15, 
     },
-
-
+    postHeading:{ 
+      flexDirection: 'row',
+      borderBottomWidth: StyleSheet.hairlineWidth, 
+      height: 30,
+      width: '100%',
+    },
+    avatar:{
+      height: 20, 
+      width: 20,
+    },
+    username: {
+      paddingLeft: 10,
+    },
+    post: {
+      alignItems: 'flex-start',
+      padding: 30,
+      backgroundColor: 'white',
+      width: "100%",
+      borderRadius: 10,
+    },
+    postText:{
+      paddingVertical: 30,
+      fontSize: 16,
+    },
+    postImage:{
+      height: 150, 
+      width: 150,
+    }
   });

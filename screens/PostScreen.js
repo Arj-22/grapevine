@@ -8,9 +8,7 @@ import * as ImagePicker from 'expo-image-picker';
 
 import {getAuth} from "firebase/auth"; 
 
-import { getDatabase, ref, set, push} from "firebase/database";
-
-
+import { getDatabase, ref, set, get ,push} from "firebase/database";
 
 const PostScreen = ({navigation, route }) => {
 
@@ -20,6 +18,8 @@ const PostScreen = ({navigation, route }) => {
   const db = getDatabase();
   const userID = getAuth().currentUser.uid; 
 
+  const [user, setUser] = useState([]); 
+
 
 
   const handlePost = () =>{
@@ -27,6 +27,7 @@ const PostScreen = ({navigation, route }) => {
       image: image,
       text: text,
       userId: userID,
+      username: user["username"]
     }).catch((error) =>{
       console.log(error.code); 
     }).then(navigation.navigate("IndexScreen"));
@@ -42,9 +43,6 @@ const PostScreen = ({navigation, route }) => {
       quality: 1,
     });
 
-
-    //console.log(result.assets[0].uri);
-
     if (!result.canceled) {
       route.params.uri = null;
       setImage(result.assets[0].uri);
@@ -55,6 +53,14 @@ const PostScreen = ({navigation, route }) => {
     if (uri != null){ 
       setImage(uri); 
     };
+
+    const userInfo = ref(db, 'users/' + userID);
+
+    get(userInfo).then((snapshot) => {
+      if (snapshot.exists()) {
+        setUser(snapshot.val());
+      }})
+
     navigation.setOptions({
       headerRight: () => 
       <Pressable onPress={() => { handlePost() }}>

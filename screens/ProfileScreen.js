@@ -14,21 +14,17 @@ const ProfileScreen = ({navigation}) => {
   const [user, setUser] = useState([]); 
 
 
-  // useEffect(() => {
-  //   const userInfo = ref(db, 'users/' + userID);
+  useEffect(() => {
+    const userInfo = ref(db, 'users/' + userID);
 
-  //   get(userInfo).then((snapshot) => {
-  //     if (snapshot.exists()) {
-  //       setUser(snapshot.val());
-  //     }})
-
-    
-  // }, []) 
-
-  console.log(user); 
-
+    get(userInfo).then((snapshot) => {
+      if (snapshot.exists()) {
+        setUser(snapshot.val());
+      }})
 
     
+  }, []) 
+
 
     const handleSignOut = () =>{
         getAuth().signOut().then(navigation.replace("LoginScreen")); 
