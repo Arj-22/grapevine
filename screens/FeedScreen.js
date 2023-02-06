@@ -63,6 +63,7 @@ const FeedScreen = ({navigation}) => {
                 data={posts}
                 //keyExtractor={(e) => e.userId.toString()}
                 renderItem={({item}) =>{ 
+                  console.log(item.image); 
                   return(
                     <View style={styles.containerInsideFeed}>
                       <View style={styles.post}>
@@ -71,7 +72,7 @@ const FeedScreen = ({navigation}) => {
                             <Text style={styles.username}>{item.username}</Text>
                           </View>
                         <Text style={styles.postText}>{item.text}</Text>  
-                        <Image source={item.image} style={styles.postImage}/>
+                        <Image source={{uri: item.image}} style={styles.postImage}/>
                         
                       </View>
                     </View>

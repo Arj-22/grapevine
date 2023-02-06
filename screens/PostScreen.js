@@ -10,6 +10,8 @@ import {getAuth} from "firebase/auth";
 
 import { getDatabase, ref, set, get ,push} from "firebase/database";
 
+//import { getStorage, uploadBytes } from "firebase/storage"; 
+
 const PostScreen = ({navigation, route }) => {
 
   let { uri } = route.params; 
@@ -18,11 +20,22 @@ const PostScreen = ({navigation, route }) => {
   const db = getDatabase();
   const userID = getAuth().currentUser.uid; 
 
+  //const storage = getStorage();
+
   const [user, setUser] = useState([]); 
 
 
 
   const handlePost = () =>{
+
+    // const imageRef = ref(storage, "images/"+image)
+
+    // const storageRef = ref(storage, 'images');
+
+    // uploadBytes(storageRef, file).then((snapshot) => {
+    //   console.log('Uploaded a blob or file!');
+    // });
+
     push(ref(db, 'posts/'), {
       image: image,
       text: text,
