@@ -106,6 +106,8 @@ export default styles = StyleSheet.create({
     cameraButton:{
       marginBottom: 50
     },
+
+    // Posts
     postImagePreview:{
       flex: 1, 
       alignSelf:'stretch',
@@ -148,7 +150,49 @@ export default styles = StyleSheet.create({
       fontSize: 16,
     },
     postImage:{
-      height: 150, 
-      width: 150,
-    }
+      height: 256, 
+      width: 256,
+    },
+
+    // Chats
+    containerInsideChats: {
+      alignItems: 'center',
+      justifyContent: 'flex-start',
+    },
+    chat: {
+      alignItems: 'flex-start',
+      padding: 30,
+      backgroundColor: 'white',
+      borderBottomWidth: '1px', 
+      width: "100%",
+    },
+    chatHeading:{ 
+      flexDirection: 'row',
+      height: 30,
+      width: '100%',
+    },    
+    chatAvatar:{
+      height: 40, 
+      width: 40,
+    },
+    chatUsername: {
+      paddingLeft: 10,
+      paddingTop: 5, 
+      fontSize: 20
+    },
+    chatScreen: {
+      width: '100%',
+      height: '60%', 
+      borderRadius: 10, 
+      marginTop: -30,
+      fontSize: 20, 
+      backgroundColor: 'white'
+    },
+    containerInsideChatScreen: {
+      paddingLeft: 10,
+      paddingTop: 5,
+    }, 
+    message: {
+      fontSize: 20
+    },
   });

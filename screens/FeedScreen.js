@@ -8,26 +8,26 @@ import { getDatabase, ref, onValue, child, get, on, onChildAdded} from "firebase
 
 
 
-tempPosts = [
-  {
-    id: 1,
-    text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", 
-    image: require("../assets/grape.png"),
-    username: "test user 1"
-  },
-  {
-    id: 2,
-    text: "This is post 2",
-    image: require("../assets/grape.png"),
-    username: "test user 2"
-  },
-  {
-    id: 3,
-    text: "This is post 3", 
-    image: require("../assets/grape.png"),
-    username: "test user 3"
-  }
-]; 
+// tempPosts = [
+//   {
+//     id: 1,
+//     text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", 
+//     image: require("../assets/grape.png"),
+//     username: "test user 1"
+//   },
+//   {
+//     id: 2,
+//     text: "This is post 2",
+//     image: require("../assets/grape.png"),
+//     username: "test user 2"
+//   },
+//   {
+//     id: 3,
+//     text: "This is post 3", 
+//     image: require("../assets/grape.png"),
+//     username: "test user 3"
+//   }
+// ]; 
 
 const FeedScreen = ({navigation}) => {
 
