@@ -21,9 +21,7 @@ const ProfileScreen = ({navigation}) => {
       if (snapshot.exists()) {
         setUser(snapshot.val());
       }})
-
-    
-  }, []) 
+  }, [])
 
 
     const handleSignOut = () =>{

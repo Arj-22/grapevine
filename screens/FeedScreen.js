@@ -39,15 +39,12 @@ const FeedScreen = ({navigation}) => {
     const posts = ref(db, 'posts');
 
     onValue(posts, (snapshot) =>{
-      const tempPost = []; 
+      setPosts([]);
       const data = snapshot.val();
       snapshot.forEach(child => {
         child.exportVal(); 
-        
-        tempPost.push(child.toJSON());
-
+        setPosts(posts => [...posts, child.toJSON()]);
       })
-      setPosts(tempPost)
     }) 
 
 }, []) 
