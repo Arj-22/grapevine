@@ -193,6 +193,24 @@ export default styles = StyleSheet.create({
       paddingTop: 5,
     }, 
     message: {
+      padding: 5,
       fontSize: 20
+    },
+    messageSent: {
+      padding: 5,
+      alignSelf: "flex-end",
+      fontSize: 20,
+      marginRight: 10,
+    },
+
+    messageTime: {
+      padding: 5,
+      fontSize: 10
+    },
+    messageSentTime: {
+      padding: 5,
+      alignSelf: "flex-end",
+      fontSize: 10,
+      marginRight: 10,
     },
   });
