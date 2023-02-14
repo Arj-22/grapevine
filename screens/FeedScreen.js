@@ -3,7 +3,7 @@ import styles from '../style';
 import {Text, View, TextInput, Button, Pressable, Image, ImageBackground, FlatList} from 'react-native'; 
 import { useState, useEffect } from 'react';
 import { getAuth } from "firebase/auth";
-import { getDatabase, ref, onValue, child, get, on, onChildAdded} from "firebase/database";
+import { getDatabase, ref, onValue, child, get, on, onChildAdded, orderByKey, query, orderByChild, orderByValue, serverTimestamp} from "firebase/database";
 
 
 
@@ -37,13 +37,13 @@ const FeedScreen = ({navigation}) => {
 
   useEffect(() => {
     const posts = ref(db, 'posts');
-
+    
     onValue(posts, (snapshot) =>{
       setPosts([]);
       const data = snapshot.val();
       snapshot.forEach(child => {
         child.exportVal(); 
-        setPosts(posts => [...posts, child.toJSON()]);
+        setPosts(posts => [child.toJSON(), ...posts]);
       })
     }) 
 
@@ -60,7 +60,7 @@ const FeedScreen = ({navigation}) => {
                 data={posts}
                 //keyExtractor={(e) => e.userId.toString()}
                 renderItem={({item}) =>{ 
-                  console.log(item.image); 
+                  var hasPic = item.image != null; 
                   return(
                     <View style={styles.containerInsideFeed}>
                       <View style={styles.post}>
@@ -69,7 +69,7 @@ const FeedScreen = ({navigation}) => {
                             <Text style={styles.username}>{item.username}</Text>
                           </View>
                         <Text style={styles.postText}>{item.text}</Text>  
-                        <Image source={{uri: item.image}} style={styles.postImage}/>
+                        <Image source={{uri: item.image}} style={hasPic ? styles.postImage : null}/>
                         
                       </View>
                     </View>

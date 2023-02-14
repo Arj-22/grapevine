@@ -29,7 +29,7 @@ export default styles = StyleSheet.create({
       fontSize: 20, 
       height: 150,
       margin: 20, 
-      width: 350,
+      width: "90%",
       backgroundColor: "#FFFFFF",
       borderRadius: 5,
       paddingTop:30,
@@ -194,13 +194,15 @@ export default styles = StyleSheet.create({
     }, 
     message: {
       padding: 5,
-      fontSize: 20
+      fontSize: 20,
+      color: "grey"
     },
     messageSent: {
       padding: 5,
       alignSelf: "flex-end",
       fontSize: 20,
       marginRight: 10,
+      
     },
 
     messageTime: {
@@ -213,4 +215,13 @@ export default styles = StyleSheet.create({
       fontSize: 10,
       marginRight: 10,
     },
+
+    newChatButton:{
+      backgroundColor: "#D591F2",
+      justifyContent: 'center',
+      alignSelf: 'center', 
+      borderRadius: 4,
+      paddingVertical: 20, 
+      width: "100%" 
+    }
   });

@@ -35,15 +35,7 @@ const CreateChatScreen = ({navigation}) => {
     push(userChatRef2, {
       chatKey
     });
-    // onChildAdded(chatRef, (data)=>{
-    //   console.log(data.key);
-    //   // push(ref(db, 'members/' + data.key), {
-    //   //   userID: true,
-    //   //   secondUser: true,
-    //   // })
-    // })
     navigation.navigate("IndexScreen");
-    //
   }
 
   useEffect(() => {
