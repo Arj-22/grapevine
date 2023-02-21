@@ -61,12 +61,18 @@ const FeedScreen = ({navigation}) => {
                 //keyExtractor={(e) => e.userId.toString()}
                 renderItem={({item}) =>{ 
                   var hasPic = item.image != null; 
+                  console.log(item);
                   return(
                     <View style={styles.containerInsideFeed}>
                       <View style={styles.post}>
                           <View style={styles.postHeading}>
                             <Image source={require("../assets/grape.png")} style={styles.avatar}/>
-                            <Text style={styles.username}>{item.username}</Text>
+                            <Pressable
+                            onPress={() => navigation.navigate("OtherProfileScreen", {userID: item.userId, username: item.username})}
+                            >
+                              <Text style={styles.username}>{item.username}</Text>
+                            </Pressable>
+                            
                           </View>
                         <Text style={styles.postText}>{item.text}</Text>  
                         <Image source={{uri: item.image}} style={hasPic ? styles.postImage : null}/>

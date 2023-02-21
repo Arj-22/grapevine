@@ -14,37 +14,10 @@ server.listen(port, () => {
 
 io.on('connection', (socket) => {
 
-    console.log("connected"); 
-    
-    // socket.on('new user', (newUserId) =>{
-    //     if(!activeUsers.some((user) => user.userId === newUserId)){
-    //         activeUsers.push({
-    //             userId: newUserId, 
-    //             socket: socket.id
-    //         })
-    //     }
-    // console.log('connected users', activeUsers);
-    // io.emit('get users', activeUsers); 
-    // })
-    //socket.emit('chats', activeChats);
+    console.log("connected");
 
     socket.on('chat message', (data) => {
-        // console.log("message");
-        // console.log(activeChats);
-        // console.log(data);
-        // if(activeChats.find(item => item.id === data.chatId)){
-        //     console.log("chat in array");
-        //     var currentChat = activeChats.find(item => item.id === data.chatId)
-        //     currentChat.messages.push({
-        //         message: data.message,
-        //         time: data.time,
-        //         username: data.username
-        //     });
-
-        //     console.log(activeChats);
-        // }
         io.emit("message", data)
-
     });
 
     socket.on('chat created', (data)=>{
@@ -66,20 +39,14 @@ io.on('connection', (socket) => {
         }
         console.log(activeChats)
     })
-
     socket.on('disconnect', () =>{
         activeUsers = activeUsers.filter((user) => user.socketId !== socket.id)
         console.log("user disconnected", activeUsers);
         io.emit('get users', activeUsers); 
     });
-
 })
 
 console.log(activeChats); 
-
-
-
-
 
         // if(activeChats.find(item => item.id === data.chatId)){
         //     console.log("chat in array")

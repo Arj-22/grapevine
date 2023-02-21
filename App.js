@@ -5,8 +5,12 @@ import ChatScreen from './screens/ChatScreen';
 import CreateChatScreen from './screens/CreateChatScreen';
 import IndexScreen from "./screens/IndexScreen"; 
 import LoginScreen from './screens/LoginScreen';
+import OtherProfileScreen from './screens/OtherProfileScreen';
 import PostScreen from './screens/PostScreen'; 
+import ProfileScreen from './screens/ProfileScreen';
+import FollowersScreen from './screens/FollowersScreen';
 import SignUp from './screens/SignUpScreen';
+import FollowingScreen from './screens/FollowingScreen';
 
 
 export default function App() {
@@ -74,6 +78,35 @@ export default function App() {
           component={CreateChatScreen}
           options={{
             title: "New Chat",
+            headerTransparent: false,
+            headerTintColor: '#000000',
+          }}
+          />
+
+          <Stack.Screen
+          name="OtherProfileScreen"
+          component={OtherProfileScreen}
+          options={{
+            title: "Other Profile",
+            headerTransparent: false,
+            headerTintColor: '#000000',
+          }}
+          />
+          <Stack.Screen
+          name="FollowersScreen"
+          component={FollowersScreen}
+          options={{
+            title: "Other Profile",
+            headerTransparent: false,
+            headerTintColor: '#000000',
+          }}
+          />
+
+        <Stack.Screen
+          name="FollowingScreen"
+          component={FollowingScreen}
+          options={{
+            title: "Other Profile",
             headerTransparent: false,
             headerTintColor: '#000000',
           }}

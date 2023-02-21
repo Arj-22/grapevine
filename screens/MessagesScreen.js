@@ -5,13 +5,14 @@ import { useState, useEffect } from 'react';
 import  io  from 'socket.io-client';
 import { getAuth } from "firebase/auth";
 import { getDatabase, ref, onValue, get} from "firebase/database";
+import { helpers }  from "../utils/helpers"
 
 const MessagesScreen  = ({navigation}) => {
   const [chats, setChats] = useState([])
   const db = getDatabase();
   const userID = getAuth().currentUser.uid; 
   const [currentUser, setCurrentUser] = useState([]);
-  const socket = io('http://192.168.1.217:3000');
+  const socket = io('http://' + helpers.ip + ":" + helpers.port);
 
 
   useEffect(() => {

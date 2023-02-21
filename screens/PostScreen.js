@@ -36,14 +36,30 @@ const PostScreen = ({navigation, route }) => {
     //   console.log('Uploaded a blob or file!');
     // });
 
-    push(ref(db, 'posts/'), {
+    const postRef = ref(db, 'posts/'); 
+
+    // push(ref(db, 'posts/'), {
+    //   image: image,
+    //   text: text,
+    //   userId: userID,
+    //   username: user["username"]
+    // }).catch((error) =>{
+    //   console.log(error.code); 
+    // }).then(navigation.navigate("IndexScreen"));
+
+    var postKey = push(postRef, {
       image: image,
       text: text,
       userId: userID,
       username: user["username"]
+    }).key; 
+
+    push(ref(db, 'user-posts/' + userID), {
+      postKey
     }).catch((error) =>{
       console.log(error.code); 
     }).then(navigation.navigate("IndexScreen"));
+
 
   }
  

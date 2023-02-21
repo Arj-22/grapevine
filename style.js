@@ -66,7 +66,8 @@ export default styles = StyleSheet.create({
       justifyContent: 'center', 
       borderRadius: 4,
       paddingVertical: 20, 
-      width: "70%" 
+      width: "70%",
+      margin: 10,
     },
     buttonText: {
       textAlign: 'center',
@@ -223,5 +224,44 @@ export default styles = StyleSheet.create({
       borderRadius: 4,
       paddingVertical: 20, 
       width: "100%" 
+    },
+
+    //profile
+    containerInsideProfile: {
+      flex: 1,
+      flexDirection: 'column', 
+      margin: 1,
+      // //justifyContent: 'flex-start',
+      // // margin: 10,
+       width: "50%", 
+    },    
+    postProfile: {
+      alignItems: 'center',
+      // // padding: 30,
+      backgroundColor: 'white',
+      // width: "100%",
+      borderRadius: 10,
+      height: 200, 
+    },
+    postProfileText:{
+      paddingVertical: 10,
+      fontSize: 16,
+    },
+    postProfileImage:{
+       height: 150, 
+       width: 150,
+    },
+    buttonContainer: {
+      flexDirection: 'row', 
+    },
+    containerInsideTopProfile: {
+      alignItems: 'center',
+      justifyContent: 'flex-start',
+      padding: 20, 
+      borderBottomWidth: 1
+    },
+    profileInfo:{
+      flexDirection: 'row', 
     }
+    
   });

@@ -5,8 +5,7 @@ import { getAuth } from "firebase/auth";
 import { getDatabase, ref, onValue, child, get, push, update} from "firebase/database";
 import { useEffect, useState } from 'react';
 import  io  from 'socket.io-client';
-
-
+import { helpers } from "../utils/helpers"
 
 
 const ChatScreen  = ({navigation, route}) => {
@@ -15,52 +14,41 @@ const ChatScreen  = ({navigation, route}) => {
   const [user, setUser] = useState([]); 
   const userID = getAuth().currentUser.uid; 
   const db = getDatabase();
-  const socket = io('http://192.168.1.217:3000');
+  const socket = io('http://' + helpers.ip + ":" + helpers.port);
   const {key, image, username} = route.params.item; 
   const currentUsername = user["username"];  
   var today = new Date();
   var time = today.getHours() + ":" + today.getMinutes()
-  
 
-
-  
 
   useEffect(() => {
     console.log("use Effect")
+    console.log('http://' + helpers.ip + helpers.port); 
     const userInfo = ref(db, 'users/' + userID);
     const chatInfo = ref(db, 'messages/' + key );
-
-
 
     get(userInfo).then((snapshot) => {
       if (snapshot.exists()) {
         setUser(snapshot.val());
       }})
 
-
       get(chatInfo).then((snapshot) => {
         if (snapshot.exists()) {
-          console.log("chatInfo")
-          setChat([]);
-          //console.log(snapshot.val());
           snapshot.forEach(child => { 
-            //setChat(chat => [child.toJSON(), ...chat]);
-            setChat(chat => [...chat, child.toJSON()]);
+            setChat(chat => [child.exportVal(), ...chat]);
           })  
         }});
 
-        
+
         socket.on("message", (data)=>{
-          setChat(chat => [ ...chat, {
+          setChat(chat => [{
             message: data.message,
             time: data.time, 
             username: data.username
-          }]); 
+          }, ...chat]); 
         })
 
   }, [])
-
-
 
 
   const submitMessage = () =>{
@@ -82,9 +70,7 @@ const ChatScreen  = ({navigation, route}) => {
     }).catch((error) =>{
       console.log(error.code); 
     })
-
-
-
+    
   }
 
     return (
@@ -97,6 +83,7 @@ const ChatScreen  = ({navigation, route}) => {
             <View style={styles.chatScreen}>
             <FlatList
                 data={chat}
+                inverted
                 //keyExtractor={(e) => e.userId.toString()}
                 renderItem={({item}) =>{ 
                   var status = item.username == currentUsername;
@@ -130,9 +117,7 @@ const ChatScreen  = ({navigation, route}) => {
       </ImageBackground>
     </View>
       
-    
     );
   }
-
 
 export default ChatScreen; 
