@@ -22,6 +22,7 @@ const ChatScreen  = ({navigation, route}) => {
 
 
   useEffect(() => {
+
     console.log("use Effect")
     console.log('http://' + helpers.ip + helpers.port); 
     const userInfo = ref(db, 'users/' + userID);
@@ -49,7 +50,6 @@ const ChatScreen  = ({navigation, route}) => {
         })
 
   }, [])
-
 
   const submitMessage = () =>{
     setMessage(""); 

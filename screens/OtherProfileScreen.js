@@ -2,7 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import styles from '../style';
 import {Text, View, TextInput, Button, Pressable, Image, ImageBackground, FlatList} from 'react-native'; 
 import { getAuth } from "firebase/auth";
-import { getDatabase, ref, onValue, child, get, push, set, remove} from "firebase/database";
+import { getDatabase, ref, onValue, child, get, push, set, remove, off} from "firebase/database";
 import { useState, useEffect } from 'react';
 
 const OtherProfileScreen = ({navigation, route}) => {
@@ -13,17 +13,23 @@ const OtherProfileScreen = ({navigation, route}) => {
   const [user, setUser] = useState([]); 
   const [posts, setPosts] = useState([]);
   const [followers, setFollowers] = useState([]); 
-  const [following, setFollwing] = useState([]); 
+  const [following, setFollowing] = useState([]); 
+
+  const userInfo = ref(db, 'users/' + userID);
+  const userPosts = ref(db, 'user-posts/' + userID);
+
+  const followersRef = ref(db, "followers/" + userID);
+  const followingRef = ref(db, "following/" + userID);
+
+  const currentFollowingRef = ref(db, "following/" + currentUserID);
 
   useEffect(() => {
-    const userInfo = ref(db, 'users/' + userID);
-
+    
     get(userInfo).then((snapshot) => {
       if (snapshot.exists()) {
         setUser(snapshot.val());
       }})
-
-    const userPosts = ref(db, 'user-posts/' + userID) ;
+      
     onValue(userPosts, (snapshot) =>{
       setPosts([]);  
       snapshot.forEach(child => { 
@@ -40,8 +46,6 @@ const OtherProfileScreen = ({navigation, route}) => {
     navigation.setOptions({
       title: username
   })
-
-  const followersRef = ref(db, "followers/" + userID);
   
   onValue(followersRef, (snapshot) =>{
     const data = snapshot.val();
@@ -50,36 +54,53 @@ const OtherProfileScreen = ({navigation, route}) => {
     snapshot.forEach(child => {
       setFollowers(followers => [...followers, child.exportVal()])
     })
-    
   }) 
-  const followingRef = ref(db, "following/" + userID);
   onValue(followingRef, (snapshot) =>{
     const data = snapshot.val();
     console.log(data);
-    setFollwing([]); 
+    setFollowing([]); 
     snapshot.forEach(child => {
-      setFollwing(following => [...following, child.exportVal()])
+      setFollowing(following => [...following, child.exportVal()])
     })
-    
   }) 
-
   }, [])
 
     const FollowUser = () =>{
-        const followersRef = ref(db, "followers/" + userID)
         push(followersRef, {followerId: currentUserID}); 
-
-        const followingRef = ref(db, "following/" + currentUserID);
-        push(followingRef, {followingId: userID}); 
+        push(currentFollowingRef, {followingId: userID}); 
     }
 
     const unFollowUser = () =>{
-      const followersRef = ref(db, "followers/" + userID)
-      remove(followersRef, {followerId: currentUserID}); 
 
-      const followingRef = ref(db, "following/" + currentUserID);
-      remove(followingRef, {followingId: userID}); 
-  }
+      get(followersRef).then((snapshot)=>{
+        snapshot.forEach(child =>{
+          if(child.toJSON().followerId == currentUserID){
+            const followersToRemoveRef = ref(db, "followers/" + userID +"/"+ child.key);
+            remove(followersToRemoveRef, {followerId: currentUserID});
+            console.log(child.key);
+            console.log(child.toJSON().followerId);
+          }
+        }).catch((error)=>{
+          console.log(error); 
+        })
+      });
+
+      get(currentFollowingRef).then((snapshot)=>{
+        snapshot.forEach(child =>{
+          console.log("Current Following child");
+          console.log(child.toJSON().followingId);
+          if(child.toJSON().followingId == userID){
+            const followersToRemoveRef = ref(db, "following/" + currentUserID +"/"+ child.key);
+            remove(followersToRemoveRef, {followingId: userID});
+            console.log(child.key);
+            console.log(child.toJSON().followerId);
+          }
+        }).catch((error)=>{
+          console.log(error); 
+        })
+
+      });
+    }
 
     const isFollowing = () =>{
       const found = followers.find(element => element.followerId == currentUserID);

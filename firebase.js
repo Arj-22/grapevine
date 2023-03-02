@@ -17,7 +17,7 @@ const firebaseConfig = {
   appId: "1:715773792985:web:3f02016b2b6b6b6c9ea4c8",
   measurementId: "G-5KYJKFJVMT",
   databaseURL: "https://the-grapevine-9937b-default-rtdb.firebaseio.com/",
-  storageBucket: 'gs://the-grapevine-9937b.appspot.com'
+  storageBucket: 'gs://the-grapevine-9937b.appspot.com'   
 };
 
 // Initialize Firebase

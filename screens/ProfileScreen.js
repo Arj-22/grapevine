@@ -4,6 +4,7 @@ import {Text, View, TextInput, Button, Pressable, Image, ImageBackground, FlatLi
 import { getAuth } from "firebase/auth";
 import { getDatabase, ref, onValue, child, get} from "firebase/database";
 import { useState, useEffect } from 'react';
+import { Base64 } from 'js-base64';
 
 const ProfileScreen = ({navigation}) => {
 
@@ -13,6 +14,13 @@ const ProfileScreen = ({navigation}) => {
 
   const [user, setUser] = useState([]); 
   const [posts, setPosts] = useState([]);
+
+  const [followers, setFollowers] = useState([]); 
+  const [following, setFollowing] = useState([]); 
+
+
+  const followersRef = ref(db, "followers/" + userID);
+  const followingRef = ref(db, "following/" + userID);
 
 
   useEffect(() => {
@@ -41,6 +49,24 @@ const ProfileScreen = ({navigation}) => {
       })
       
     })
+
+
+    onValue(followersRef, (snapshot) =>{
+      const data = snapshot.val();
+      console.log(data);
+      setFollowers([]); 
+      snapshot.forEach(child => {
+        setFollowers(followers => [...followers, child.exportVal()])
+      })
+    }) 
+    onValue(followingRef, (snapshot) =>{
+      const data = snapshot.val();
+      console.log(data);
+      setFollowing([]); 
+      snapshot.forEach(child => {
+        setFollowing(following => [...following, child.exportVal()])
+      })
+    }) 
     console.log(posts)
   }, [])
 
@@ -56,6 +82,14 @@ const ProfileScreen = ({navigation}) => {
           >
           <View style={styles.containerInsideTopProfile}>
             <Text style={styles.textLabel}>Username: {user["username"]} </Text>
+            <View style={styles.profileInfo}>
+              <Pressable onPress={() => {navigation.navigate("FollowersScreen", {userID: userID})}}>
+                <Text style={styles.textLabel}>Followers: {followers.length} </Text>
+              </Pressable>
+              <Pressable onPress={() => {navigation.navigate("FollowingScreen", {userID: userID})}}>
+              <Text style={styles.textLabel}>Following: {following.length} </Text>
+              </Pressable>
+            </View>
             <View style={styles.buttonContainer}>
               <Pressable 
                 style={styles.button} 
@@ -73,7 +107,7 @@ const ProfileScreen = ({navigation}) => {
               
               renderItem={({item}) =>{ 
                 console.log(posts)
-                var hasPic = item.image != null; 
+                var hasPic = item.image != ""; 
                 return(
                   <View style={styles.containerInsideProfile}>
                     <View style={styles.postProfile}>
@@ -82,7 +116,7 @@ const ProfileScreen = ({navigation}) => {
                           <Text style={styles.username}>{item.username}</Text>
                         </View> */}
                       <Text style={styles.postProfileText}>{item.text}</Text>  
-                      <Image source={{uri: item.image}} style={hasPic ? styles.postProfileImage : null}/>
+                      <Image source={hasPic ? {uri: item.image} : null} style={hasPic ? styles.postProfileImage : null}/>
                       
                       
                     </View>

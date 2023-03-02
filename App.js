@@ -12,7 +12,6 @@ import FollowersScreen from './screens/FollowersScreen';
 import SignUp from './screens/SignUpScreen';
 import FollowingScreen from './screens/FollowingScreen';
 
-
 export default function App() {
 
   const Stack = createNativeStackNavigator(); 
