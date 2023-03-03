@@ -2,7 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import styles from '../style';
 import { MaterialIcons } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
-import {Text, View, TextInput, Button, Pressable, Image, ImageBackground, Keyboard,TouchableWithoutFeedback} from 'react-native'; 
+import {Text, View, TextInput, ActivityIndicator, Pressable, Image, ImageBackground, Keyboard,TouchableWithoutFeedback} from 'react-native'; 
 import { useEffect, useState } from 'react';
 import * as ImagePicker from 'expo-image-picker';
 
@@ -20,77 +20,115 @@ const PostScreen = ({navigation, route }) => {
   let { uri } = route.params; 
   const [image, setImage] = useState(null);
   const [text, setText] = useState("");  
+  const [URL, setURL] = useState(""); 
   const [user, setUser] = useState([]); 
+  const [uploading, setUploading] = useState(false); 
+  const [transferred, setTransferred] = useState(0);
+
   const userID = getAuth().currentUser.uid; 
   const storage = getStorage();
   const db = getDatabase();  
+
+
+  const uploadPost = async () =>{
+    if (image != null ){
+      let filename = image.substring(image.lastIndexOf('/') + 1)
+
+      const metadata = {
+        contentType: 'image/jpeg'
+      };
+
+      let response = await fetch(image);
+      let blob = await response.blob();
+
+      //setUploading(true)
+      const storageRef = ref(storage, "posts/"+ filename);
+      const uploadTask = uploadBytesResumable(storageRef, blob, metadata);
+      try{
+          uploadTask.on("state_changed", (snapshot) =>{
+            const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            console.log('Upload is ' + progress + '% done');
+            //setTransferred(Math.ceil(progress)); 
+            //setUploading(false)
+
+          }, (error) =>{
+            console.log(error.code); 
+            switch (error.code) {
+              case 'storage/unauthorized':
+                // User doesn't have permission to access the object
+                console.log(error); 
+                break;
+              case 'storage/canceled':
+                // User canceled the upload
+                console.log(error); 
+                break;
+        
+              // ...
+        
+              case 'storage/unknown':
+                // Unknown error occurred, inspect error.serverResponse
+                console.log(error.serverResponse); 
+                break;
+            }
+          }, () =>{
+            
+            getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+              console.log('File available at', downloadURL);
+              //setURL(downloadURL); 
+
+              post(downloadURL);
+
+            }).catch((e) =>{
+              console.log(e); 
+            });
+      });
+    }catch(error){
+      console.log(error);
+    }
+
+    }else{
+      const postRef = refFromURL(db, "https://the-grapevine-9937b-default-rtdb.firebaseio.com/posts/");
+      var postKey = push(postRef, {
+        image: null,
+        text: text,
+        userId: userID,
+        username: user["username"]
+      }).key;
   
-  const handlePost = async () =>{
-
-    let filename = image.substring(image.lastIndexOf('/') + 1)
-
-    const metadata = {
-      contentType: 'image/jpeg'
-    };
-
-    const response = await fetch(image);
-    const blob = await response.blob();
-
-
-    const storageRef = ref(storage, "posts/"+ filename);
-    const uploadTask = uploadBytesResumable(storageRef, blob, metadata);
-
-    uploadTask.on('state_changed', 
-    (snapshot) => {
-      const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-      console.log('Upload is ' + progress + '% done');
-      // switch (snapshot.state) {
-      //   case 'paused':
-      //     console.log('Upload is paused');
-      //     break;
-      //   case 'running':
-      //     console.log('Upload is running');
-      //     break;
-      // }
-    }, 
-    (error) => {
-      console.log(error)
-    }, 
-   async () => {
-      await getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-        console.log('File available at', downloadURL);
-        const postRef = refFromURL(db, "https://the-grapevine-9937b-default-rtdb.firebaseio.com/posts/");
-        var postKey = push(postRef, {
-          image: downloadURL,
-          text: text,
-          userId: userID,
-          username: user["username"]
-        }).key;
-  
-        push(refFromURL(db, 'https://the-grapevine-9937b-default-rtdb.firebaseio.com/user-posts/' + userID), {
-          postKey
-        }).then(navigation.navigate("IndexScreen")).catch((error) =>{
-          console.log(error.code); 
-        });
-
-
+      push(refFromURL(db, 'https://the-grapevine-9937b-default-rtdb.firebaseio.com/user-posts/' + userID), {
+        postKey
+      }).then(navigation.navigate("IndexScreen")).catch((error) =>{
+        console.log(error.code); 
       });
     }
-  );
+  };
 
 
+  const post = (downloadURL) =>{
+    const postRef = refFromURL(db, "https://the-grapevine-9937b-default-rtdb.firebaseio.com/posts/");
+    var postKey = push(postRef, {
+      image: downloadURL,
+      text: text,
+      userId: userID,
+      username: user["username"]
+    }).key;
 
+    push(refFromURL(db, 'https://the-grapevine-9937b-default-rtdb.firebaseio.com/user-posts/' + userID), {
+      postKey
+    }).then(navigation.navigate("IndexScreen")).catch((error) =>{
+      console.log(error.code); 
+    });
   }
 
 
- 
+
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
       aspect: [4, 3],
-      quality: 1,
+      quality: 0,
     });
 
     if (!result.canceled) {
@@ -114,7 +152,7 @@ const PostScreen = ({navigation, route }) => {
 
     navigation.setOptions({
       headerRight: () => 
-      <Pressable onPress={() => { handlePost()}}>
+      <Pressable onPress={() => { uploadPost()}}>
         <FontAwesome name="send" size={30} style={styles.postScreenIcons} />
       </Pressable>
   })
@@ -147,7 +185,7 @@ const PostScreen = ({navigation, route }) => {
                 }}>
                 <MaterialIcons name="photo-camera" size={35} style={styles.postScreenIcons }/>
               </Pressable>
-              
+              {uploading ? (<Text> {"Uploading " + transferred+"%"}</Text>): null}
             </View>
             <View style={styles.photoContainer}>
               <Image style={styles.postImagePreview} source={{uri: image}}/>
