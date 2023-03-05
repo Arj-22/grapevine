@@ -11,6 +11,7 @@ import ProfileScreen from './screens/ProfileScreen';
 import FollowersScreen from './screens/FollowersScreen';
 import SignUp from './screens/SignUpScreen';
 import FollowingScreen from './screens/FollowingScreen';
+import ProfileFeedScreen from './screens/ProfileFeedScreen';
 
 export default function App() {
 
@@ -106,6 +107,15 @@ export default function App() {
           component={FollowingScreen}
           options={{
             title: "Other Profile",
+            headerTransparent: false,
+            headerTintColor: '#000000',
+          }}
+          />
+          <Stack.Screen
+          name="ProfileFeedScreen"
+          component={ProfileFeedScreen}
+          options={{
+            title: "Post",
             headerTransparent: false,
             headerTintColor: '#000000',
           }}

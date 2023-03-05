@@ -7,35 +7,15 @@ import { getDatabase, ref, onValue, get} from "firebase/database";
 import PostTile from '../components/PostTile';
 
 
-const FeedScreen = ({navigation}) => {
+const ProfileFeedScreen = ({navigation, route}) => {
 
   const db = getDatabase();
   const userID = getAuth().currentUser.uid; 
   const [posts, setPosts] = useState([]);
-  const [username, setUsername] = useState(""); 
-
-  const getUsername = (id) =>{
-    const userInfo = ref(db, 'users/' + id);
-
-    get(userInfo).then((snapshot) => {
-      if (snapshot.exists()) {
-        //console.log(snapshot.toJSON().username);
-        setUsername(snapshot.toJSON().username);
-      }})
-  }
+  const item = route.params.item;  
 
   useEffect(() => {
-    const posts = ref(db, 'posts');
-    
-    onValue(posts, (snapshot) =>{
-      setPosts([]);
-      const data = snapshot.val();
-      snapshot.forEach(child => {
-        child.exportVal(); 
-        setPosts(posts => [child.toJSON(), ...posts]);
-      })
-    }) 
-
+    setPosts([item]); 
 }, []) 
 
     return (
@@ -47,9 +27,9 @@ const FeedScreen = ({navigation}) => {
               <FlatList
                 data={posts}
                 renderItem={({item}) =>{ 
-                  
                   var hasPic = item.image != null; 
                   var hasText = item.text != ""; 
+
                   return(
                     <View style={styles.containerInsideFeed}>
                       <PostTile navigation={navigation} item={item} hasPic={hasPic} hasText={hasText}/>
@@ -63,4 +43,4 @@ const FeedScreen = ({navigation}) => {
     );
   }
 
-export default FeedScreen; 
+export default ProfileFeedScreen; 

@@ -63,7 +63,7 @@ const MessagesScreen  = ({navigation}) => {
                         navigation.navigate("ChatScreen", {item})
                         }}>
                           <View style={styles.chatHeading}>
-                            <Image source={require("../assets/grape.png")} style={styles.chatAvatar}/>
+                            <Image source={require("../assets/avatar.png")} style={styles.chatAvatar}/>
                             <Text style={styles.chatUsername}>{ staus ? item.chat.users[1]: item.chat.users[0]}</Text>
                           </View>
                       </Pressable>

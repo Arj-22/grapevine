@@ -124,35 +124,49 @@ export default styles = StyleSheet.create({
     containerInsideFeed: {
       alignItems: 'center',
       justifyContent: 'flex-start',
-      padding: 15, 
+      // padding: 15, 
+      margin: 10,
     },
     postHeading:{ 
       flexDirection: 'row',
       borderBottomWidth: StyleSheet.hairlineWidth, 
-      height: 30,
+      height: 50,
       width: '100%',
+      marginTop: 10,
+    },
+    postBottom:{
+      // borderTopWidth: StyleSheet.hairlineWidth, 
+      flexDirection: 'row',
+      padding: 15,
+      width: "100%",
     },
     avatar:{
-      height: 20, 
-      width: 20,
+      marginLeft: 15,
+      height: 30, 
+      width: 30,
     },
     username: {
+      paddingTop: 6,
       paddingLeft: 10,
+      fontSize: 15,
     },
     post: {
       alignItems: 'flex-start',
-      padding: 30,
+      padding: 0,
+      paddingTop: 10,
       backgroundColor: 'white',
       width: "100%",
       borderRadius: 10,
     },
     postText:{
-      paddingVertical: 30,
+      paddingVertical: 15,
+      marginTop: 10,
       fontSize: 16,
+      paddingLeft: 20, 
     },
     postImage:{
-      height: 256, 
-      width: 256,
+      height: 300, 
+      width: "100%",
     },
 
     // Chats
@@ -231,15 +245,13 @@ export default styles = StyleSheet.create({
       flex: 1,
       flexDirection: 'column', 
       margin: 1,
-      // //justifyContent: 'flex-start',
-      // // margin: 10,
-       width: "50%", 
+      width: "50%", 
     },    
     postProfile: {
       alignItems: 'center',
-      // // padding: 30,
+      //padding: 5,
       backgroundColor: 'white',
-      // width: "100%",
+      //width: "100%",
       borderRadius: 10,
       height: 200, 
     },
@@ -248,8 +260,9 @@ export default styles = StyleSheet.create({
       fontSize: 16,
     },
     postProfileImage:{
-       height: 150, 
-       width: 150,
+       height: "100%", 
+       width: "100%",
+       borderRadius: 10,
     },
     buttonContainer: {
       flexDirection: 'row', 
@@ -262,6 +275,32 @@ export default styles = StyleSheet.create({
     },
     profileInfo:{
       flexDirection: 'row', 
+    },
+    profileTopContainer:{ 
+      flexDirection: 'column',
+      alignItems: 'center',
+      paddingTop: 10 
+    },
+    avatarProfile:{
+      borderRadius: 40,
+      height: 100, 
+      width: 100,
+      marginBottom: 20
+    },
+    usernameText:{
+      fontSize: 30,
+    },
+    containerInsideProfileText: {
+      // flex: 1,
+      flexDirection: 'column', 
+      margin: 1,
+      justifyContent: 'flex-start',
+      backgroundColor: "white", 
+      padding: 15,  
+
+    },   
+    quotes:{
+      fontSize: 15,
     }
     
   });

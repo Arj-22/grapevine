@@ -1,0 +1,66 @@
+import { StatusBar } from 'expo-status-bar';
+import styles from '../style';
+import {Text, View, TextInput, Button, Pressable, Image, ImageBackground, FlatList} from 'react-native'; 
+import { getAuth } from "firebase/auth";
+import { getDatabase, ref, onValue, child, get} from "firebase/database";
+import { useState, useEffect } from 'react';
+
+
+
+
+
+const ImagePosts = ({navigation, posts}) => {
+
+
+    
+    console.log("props")
+    //console.log(posts);
+    console.log(posts);
+
+    //console.log(props)
+    // const posts = props
+
+    const [tab, setTab] = useState(true); 
+    const [imagePosts, setImagePosts] = useState([]); 
+
+
+    const sortPosts = () =>{
+        setImagePosts([]);
+        posts.forEach(post => {
+            console.log("Post");
+            //console.log(post.hasOwnProperty("image"));
+            if(post.hasOwnProperty("image")){
+                setImagePosts(imagePosts => [...imagePosts, post])
+            }
+        });
+    }
+
+    useEffect(() =>{ 
+        sortPosts(); 
+    }, [posts] )
+
+
+    return (
+        <FlatList
+            data={imagePosts}
+            renderItem={({item}) =>{ 
+                console.log(item);
+                var hasText = item.text != ""; 
+                return(
+                <View style={styles.containerInsideProfile}>
+                    <Pressable onPress={() => navigation.navigate("ProfileFeedScreen", {item})}>
+                        <View style={styles.postProfile}>
+                            {/* <Text style={hasText ? styles.postProfileText : null}>{item.text}</Text>   */}
+                            <Image source={{uri: item.image}} style={styles.postProfileImage}/>
+                        </View>
+                    </Pressable>
+                </View>
+                );
+            }}
+            numColumns={2}
+        />
+    );
+  }
+
+
+export default ImagePosts; 

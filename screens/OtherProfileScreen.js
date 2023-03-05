@@ -4,6 +4,12 @@ import {Text, View, TextInput, Button, Pressable, Image, ImageBackground, FlatLi
 import { getAuth } from "firebase/auth";
 import { getDatabase, ref, onValue, child, get, push, set, remove, off} from "firebase/database";
 import { useState, useEffect } from 'react';
+import ProfileContainer from '../components/ProfileContainer';
+import ImagePosts from '../components/ImagePosts';
+import TextPosts from '../components/TextPosts';
+
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+
 
 const OtherProfileScreen = ({navigation, route}) => {
 
@@ -22,6 +28,9 @@ const OtherProfileScreen = ({navigation, route}) => {
   const followingRef = ref(db, "following/" + userID);
 
   const currentFollowingRef = ref(db, "following/" + currentUserID);
+
+  const Tab = createMaterialTopTabNavigator();
+
 
   useEffect(() => {
     
@@ -119,6 +128,7 @@ const OtherProfileScreen = ({navigation, route}) => {
           source={require("../assets/rm222-mind-22.jpg")}
           style={styles.background}
           >
+          <ProfileContainer username={user['username']}/>
           <View style={styles.containerInsideTopProfile}>
             <View style={styles.profileInfo}>
               <Pressable onPress={() => {navigation.navigate("FollowersScreen", {userID: userID})}}>
@@ -139,27 +149,22 @@ const OtherProfileScreen = ({navigation, route}) => {
             </View>
             <StatusBar style="auto" />
             </View>     
-            <FlatList
-              data={posts}
-              //keyExtractor={(e) => e.userId.toString()}
-              renderItem={({item}) =>{ 
-                //console.log(posts)
-                var hasPic = item.image != null; 
-                return(
-                  <View style={styles.containerInsideProfile}>
-                    <View style={styles.postProfile}>
-                        {/* <View style={styles.postHeadingProfile}>
-                          <Image source={require("../assets/grape.png")} style={styles.avatar}/>
-                          <Text style={styles.username}>{item.username}</Text>
-                        </View> */}
-                      <Text style={styles.postProfileText}>{item.text}</Text>  
-                      <Image source={{uri: item.image}} style={hasPic ? styles.postProfileImage : null}/>
-                    </View>
-                  </View>
-                );
+
+            <Tab.Navigator>
+              <Tab.Screen name='Pictures' 
+                children={() =>{
+                  return(
+                    <ImagePosts navigation={navigation} posts={posts}/>     
+                  )
               }}
-              numColumns={2}
-            />
+              />
+              <Tab.Screen name='Quotes'                 
+                children={() =>{
+                  return(
+                    <TextPosts navigation={navigation} posts={posts}/>     
+                  )
+              }}/>
+            </Tab.Navigator>
         </ImageBackground>
       </View>
     );

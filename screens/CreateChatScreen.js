@@ -9,7 +9,6 @@ import {helpers} from "../utils/helpers";
 
 const CreateChatScreen = ({navigation}) => {
 
-
   const db = getDatabase();
   const userID = getAuth().currentUser.uid; 
   const socket = io('http://' + helpers.ip + ":" + helpers.port);
@@ -27,7 +26,6 @@ const CreateChatScreen = ({navigation}) => {
       users: [currentUsername, secondUsername]
     }).key; 
 
-
     const userChatRef1 = ref(db, "user-chats/" + userID )
     push(userChatRef1, {
       chatKey
@@ -40,7 +38,6 @@ const CreateChatScreen = ({navigation}) => {
   }
 
   useEffect(() => {
-
     const userInfo = ref(db, 'users/' + userID);
     get(userInfo).then((snapshot) => {
       if (snapshot.exists()) {
@@ -61,8 +58,7 @@ const CreateChatScreen = ({navigation}) => {
     }) 
 
   }, []) 
-
-
+  
     return (
         <View style={styles.container}>
         <ImageBackground
@@ -71,21 +67,17 @@ const CreateChatScreen = ({navigation}) => {
           >
             <FlatList
                 data={users}
-                //keyExtractor={(e) => e.userId.toString()}
                 renderItem={({item}) =>{ 
                   return(
                     <View style={styles.containerInsideChats}>
-
                       <Pressable style={styles.chat} onPress={() =>{createChat(item)}}>
                           <View style={styles.chatHeading}>
                             <Image source={require("../assets/grape.png")} style={styles.chatAvatar}/>
                             <Text style={styles.chatUsername}>{item.user.username}</Text>
                           </View>
                       </Pressable>
-                      
                     </View>
                   );
-
               }}
               />
             <StatusBar style="auto" />     
@@ -93,6 +85,4 @@ const CreateChatScreen = ({navigation}) => {
       </View>
     );
   }
-
-
 export default CreateChatScreen; 

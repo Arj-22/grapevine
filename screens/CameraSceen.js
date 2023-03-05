@@ -39,7 +39,7 @@ const CameraScreen = ({navigation}) => {
 
 
     const resizeImage = async (photo) =>{
-        const manipResult = await manipulateAsync(photo.uri, [], {compress: 0, format: SaveFormat.JPEG})
+        const manipResult = await manipulateAsync(photo.uri, [], {compress: 0.3, format: SaveFormat.JPEG})
         console.log(manipResult); 
         return manipResult
     }
