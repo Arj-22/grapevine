@@ -11,6 +11,7 @@ const FeedScreen = ({navigation}) => {
 
   const db = getDatabase();
   const userID = getAuth().currentUser.uid; 
+  const [user, setUser] = useState([])
   const [posts, setPosts] = useState([]);
   const [username, setUsername] = useState(""); 
 
@@ -36,6 +37,13 @@ const FeedScreen = ({navigation}) => {
       })
     }) 
 
+    const userInfo = ref(db, 'users/' + userID);
+
+    get(userInfo).then((snapshot) => {
+      if (snapshot.exists()) {
+        setUser(snapshot.val());
+      }})
+
 }, []) 
 
     return (
@@ -52,7 +60,7 @@ const FeedScreen = ({navigation}) => {
                   var hasText = item.text != ""; 
                   return(
                     <View style={styles.containerInsideFeed}>
-                      <PostTile navigation={navigation} item={item} hasPic={hasPic} hasText={hasText}/>
+                      <PostTile navigation={navigation} item={item} hasPic={hasPic} hasText={hasText} user={user}/>
                     </View>
                   );
               }}

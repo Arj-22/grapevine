@@ -9,7 +9,7 @@ import { useState, useEffect } from 'react';
 
 
 
-const TextPosts = ({navigation, posts}) => {
+const TextPosts = ({navigation, posts, user}) => {
 
     console.log("props")
     //console.log(posts);
@@ -46,7 +46,7 @@ const TextPosts = ({navigation, posts}) => {
                 console.log(item);
                 return(
                 <View style={styles.containerInsideProfileText}>
-                    <Pressable onPress={() => navigation.navigate("ProfileFeedScreen", {item})}>
+                    <Pressable onPress={() => navigation.navigate("ProfileFeedScreen", {item, user})}>
                         <Text style={styles.quotes}>{item.text}</Text>
                     </Pressable>
                 </View>

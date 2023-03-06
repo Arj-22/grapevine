@@ -7,7 +7,7 @@ import { getDatabase, ref, onValue, child, get} from "firebase/database";
 import { useState, useEffect } from 'react';
 
 
-const PostTile = ({navigation, item, hasPic, hasText}) => {
+const PostTile = ({navigation, item, hasPic, hasText, user}) => {
 
     const showText = (hasText, item ) =>{
         console.log(hasText);
@@ -18,10 +18,12 @@ const PostTile = ({navigation, item, hasPic, hasText}) => {
         }
     }
 
+    console.log(user);
+
     return (
         <View style={styles.post}>
             <View style={styles.postHeading}>
-            <Image source={require("../assets/avatar.png")} style={styles.avatar}/>
+            <Image source={{uri: user.avatar}} style={styles.avatar}/>
             <Pressable
             onPress={() => navigation.navigate("OtherProfileScreen", {userID: item.userId, username: item.username})}
             >

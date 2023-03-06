@@ -23,7 +23,6 @@ const ProfileScreen = ({navigation}) => {
   const [followers, setFollowers] = useState([]); 
   const [following, setFollowing] = useState([]); 
 
-
   const followersRef = ref(db, "followers/" + userID);
   const followingRef = ref(db, "following/" + userID);
 
@@ -53,7 +52,6 @@ const ProfileScreen = ({navigation}) => {
       })
     })
 
-
     onValue(followersRef, (snapshot) =>{
       const data = snapshot.val();
       console.log(data);
@@ -67,7 +65,7 @@ const ProfileScreen = ({navigation}) => {
       console.log(data);
       setFollowing([]); 
       snapshot.forEach(child => {
-        setFollowing(following => [...following, child.exportVal()])
+        setFollowing(following => [...following, child.exportVal()]);
       })
     }) 
     console.log(posts)
@@ -84,7 +82,7 @@ const ProfileScreen = ({navigation}) => {
           source={require("../assets/rm222-mind-22.jpg")}
           style={styles.background}
           >
-          <ProfileContainer username={user['username']}/>
+          <ProfileContainer user={user} />
           <View style={styles.containerInsideTopProfile}>
             <View style={styles.profileInfo}>
               <Pressable onPress={() => {navigation.navigate("FollowersScreen", {userID: userID})}}>
@@ -109,14 +107,14 @@ const ProfileScreen = ({navigation}) => {
               <Tab.Screen name='Pictures' 
                 children={() =>{
                   return(
-                    <ImagePosts navigation={navigation} posts={posts}/>     
+                    <ImagePosts navigation={navigation} posts={posts} user={user}/>     
                   )
               }}
               />
               <Tab.Screen name='Quotes'                 
                 children={() =>{
                   return(
-                    <TextPosts navigation={navigation} posts={posts}/>     
+                    <TextPosts navigation={navigation} posts={posts} user={user}/>     
                   )
               }}/>
             </Tab.Navigator>

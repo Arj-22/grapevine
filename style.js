@@ -144,6 +144,7 @@ export default styles = StyleSheet.create({
       marginLeft: 15,
       height: 30, 
       width: 30,
+      borderRadius: 50, 
     },
     username: {
       paddingTop: 6,
@@ -282,7 +283,7 @@ export default styles = StyleSheet.create({
       paddingTop: 10 
     },
     avatarProfile:{
-      borderRadius: 40,
+      borderRadius: 50,
       height: 100, 
       width: 100,
       marginBottom: 20

@@ -12,6 +12,7 @@ import FollowersScreen from './screens/FollowersScreen';
 import SignUp from './screens/SignUpScreen';
 import FollowingScreen from './screens/FollowingScreen';
 import ProfileFeedScreen from './screens/ProfileFeedScreen';
+import SelectAvatarScreen from './screens/SelectAvatarScreen';
 
 export default function App() {
 
@@ -120,7 +121,6 @@ export default function App() {
             headerTintColor: '#000000',
           }}
           />
-          
       </Stack.Navigator>
     </NavigationContainer>
   );

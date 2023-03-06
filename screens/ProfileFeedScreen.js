@@ -13,6 +13,7 @@ const ProfileFeedScreen = ({navigation, route}) => {
   const userID = getAuth().currentUser.uid; 
   const [posts, setPosts] = useState([]);
   const item = route.params.item;  
+  const user = route.params.user;  
 
   useEffect(() => {
     setPosts([item]); 
@@ -32,7 +33,7 @@ const ProfileFeedScreen = ({navigation, route}) => {
 
                   return(
                     <View style={styles.containerInsideFeed}>
-                      <PostTile navigation={navigation} item={item} hasPic={hasPic} hasText={hasText}/>
+                      <PostTile navigation={navigation} item={item} hasPic={hasPic} hasText={hasText} user={user}/>
                     </View>
                   );
               }}

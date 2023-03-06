@@ -9,7 +9,7 @@ import { useState, useEffect } from 'react';
 
 
 
-const ImagePosts = ({navigation, posts}) => {
+const ImagePosts = ({navigation, posts, user}) => {
 
 
     
@@ -48,7 +48,7 @@ const ImagePosts = ({navigation, posts}) => {
                 var hasText = item.text != ""; 
                 return(
                 <View style={styles.containerInsideProfile}>
-                    <Pressable onPress={() => navigation.navigate("ProfileFeedScreen", {item})}>
+                    <Pressable onPress={() => navigation.navigate("ProfileFeedScreen", {item, user})}>
                         <View style={styles.postProfile}>
                             {/* <Text style={hasText ? styles.postProfileText : null}>{item.text}</Text>   */}
                             <Image source={{uri: item.image}} style={styles.postProfileImage}/>

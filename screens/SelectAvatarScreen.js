@@ -15,9 +15,9 @@ import {getAuth} from "firebase/auth";
 import { getDatabase, push, refFromURL, get} from "firebase/database";
 
 
-const PostScreen = ({navigation, route }) => {
+const SelectAvatarScreen = ({navigation, route}) => {
 
-  let { uri } = route.params; 
+  let {uri} = route.params;    
   const [image, setImage] = useState(null);
   const [text, setText] = useState("");  
   const [user, setUser] = useState([]); 
@@ -200,4 +200,4 @@ const PostScreen = ({navigation, route }) => {
   }
 
 
-export default PostScreen; 
+export default SelectAvatarScreen; 
