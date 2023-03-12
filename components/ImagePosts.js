@@ -29,7 +29,7 @@ const ImagePosts = ({navigation, posts, user}) => {
         posts.forEach(post => {
             console.log("Post");
             //console.log(post.hasOwnProperty("image"));
-            if(post.hasOwnProperty("image")){
+            if(post.child.hasOwnProperty("image")){
                 setImagePosts(imagePosts => [...imagePosts, post])
             }
         });
@@ -45,13 +45,13 @@ const ImagePosts = ({navigation, posts, user}) => {
             data={imagePosts}
             renderItem={({item}) =>{ 
                 console.log(item);
-                var hasText = item.text != ""; 
+                var hasText = item.child.text != ""; 
                 return(
                 <View style={styles.containerInsideProfile}>
                     <Pressable onPress={() => navigation.navigate("ProfileFeedScreen", {item, user})}>
                         <View style={styles.postProfile}>
                             {/* <Text style={hasText ? styles.postProfileText : null}>{item.text}</Text>   */}
-                            <Image source={{uri: item.image}} style={styles.postProfileImage}/>
+                            <Image source={{uri: item.child.image}} style={styles.postProfileImage}/>
                         </View>
                     </Pressable>
                 </View>

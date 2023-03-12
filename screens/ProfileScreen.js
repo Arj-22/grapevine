@@ -39,15 +39,17 @@ const ProfileScreen = ({navigation}) => {
 
     const userPosts = ref(db, 'user-posts/' + userID) ;
     onValue(userPosts, (snapshot) =>{
-      setPosts([]);  
-      console.log(posts);    
+      setPosts([]);   
       snapshot.forEach(child => { 
-        child.exportVal(); 
+        //child.exportVal(); 
         const posts = ref(db, 'posts/' + child.toJSON().postKey) ;
         get(posts).then((snapshot) => {
           if (snapshot.exists()) {
-            console.log(snapshot.val());
-            setPosts(posts => [...posts, snapshot.val()]); 
+            var post = {
+              key: child.toJSON().postKey,
+              child: snapshot.val()
+            }
+            setPosts(posts => [...posts, post]); 
           }}).catch()
       })
     })

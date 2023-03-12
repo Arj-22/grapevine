@@ -13,9 +13,11 @@ const CreateChatScreen = ({navigation}) => {
   const userID = getAuth().currentUser.uid; 
   const socket = io('http://' + helpers.ip + ":" + helpers.port);
   const [users, setUsers] = useState([]); 
-  const [currentUsername, setCurrentUsername] = useState("");
+  const [currentUser, setCurrentUser] = useState(null);
 
   const createChat = (user) =>{
+
+    console.log(user);
     const secondUser = user.id;
     const secondUsername = user.user.username; 
 
@@ -23,7 +25,8 @@ const CreateChatScreen = ({navigation}) => {
 
     var chatKey = push(chatRef, {
       image: "",
-      users: [currentUsername, secondUsername]
+      users: [currentUser.username, secondUsername],
+      avatars: [currentUser.avatar, user.user.avatar]
     }).key; 
 
     const userChatRef1 = ref(db, "user-chats/" + userID )
@@ -41,7 +44,7 @@ const CreateChatScreen = ({navigation}) => {
     const userInfo = ref(db, 'users/' + userID);
     get(userInfo).then((snapshot) => {
       if (snapshot.exists()) {
-        setCurrentUsername(snapshot.val().username);
+        setCurrentUser(snapshot.val());
       }})
 
     const users = ref(db, 'users');
@@ -72,7 +75,7 @@ const CreateChatScreen = ({navigation}) => {
                     <View style={styles.containerInsideChats}>
                       <Pressable style={styles.chat} onPress={() =>{createChat(item)}}>
                           <View style={styles.chatHeading}>
-                            <Image source={require("../assets/grape.png")} style={styles.chatAvatar}/>
+                            <Image source={{uri: item.user.avatar}} style={styles.chatAvatar}/>
                             <Text style={styles.chatUsername}>{item.user.username}</Text>
                           </View>
                       </Pressable>

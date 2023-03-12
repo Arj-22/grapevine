@@ -20,14 +20,14 @@ const MessagesScreen  = ({navigation}) => {
 
     onValue(chats, (snapshot) =>{
       setChats([]);
-      console.log(snapshot.val());
+      //console.log(snapshot.val());
       snapshot.forEach(child => {
         const chatKey = child.toJSON().chatKey; 
         const chats = ref(db, 'chats/' + chatKey);
         onValue(chats, (snapshot) =>{
           setChats(chats => [...chats, {
             key: chatKey,
-            chat: snapshot.val()
+            chat: snapshot.val(),
           }]);
         })
       })
@@ -48,14 +48,14 @@ const MessagesScreen  = ({navigation}) => {
       <ImageBackground
         source={require("../assets/rm222-mind-22.jpg")}
         style={styles.background}
-        >
+        > 
           <Pressable style={styles.newChatButton} onPress={() => {navigation.navigate("CreateChatScreen")}}>
             <Text style={styles.buttonText}>New Chat</Text>
           </Pressable>
-          <FlatList
+          <FlatList 
                 data={chats}
                 renderItem={({item}) =>{ 
-                  var staus = item.chat.users[0] == currentUser.username; 
+                  var status = item.chat.users[0] == currentUser.username;
                   return(
                     <View style={styles.containerInsideChats}>
                       <Pressable style={styles.chat} onPress={() =>{
@@ -63,8 +63,8 @@ const MessagesScreen  = ({navigation}) => {
                         navigation.navigate("ChatScreen", {item})
                         }}>
                           <View style={styles.chatHeading}>
-                            <Image source={require("../assets/avatar.png")} style={styles.chatAvatar}/>
-                            <Text style={styles.chatUsername}>{ staus ? item.chat.users[1]: item.chat.users[0]}</Text>
+                            <Image source={status ? {uri :item.chat.avatars[1]} : {uri: item.chat.avatars[0]}} style={styles.chatAvatar}/>
+                            <Text style={styles.chatUsername}>{ status ? item.chat.users[1]: item.chat.users[0]}</Text>
                           </View>
                       </Pressable>
                       

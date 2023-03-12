@@ -43,6 +43,7 @@ const SignUp = ({navigation}) => {
       createUserWithEmailAndPassword(auth, email, password).then((userCredential) =>{
         const user = userCredential.user; 
         set(ref(db, 'users/' + user.uid), {
+          avatar: "https://firebasestorage.googleapis.com/v0/b/the-grapevine-9937b.appspot.com/o/avatars%2Favatar2.png?alt=media&token=70d4eb7f-be28-4e0b-9ab2-a9237048976c",
           username: username,
           firstName: firstName,
           lastName: lastName,

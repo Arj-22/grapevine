@@ -11,8 +11,8 @@ import ProfileScreen from './screens/ProfileScreen';
 import FollowersScreen from './screens/FollowersScreen';
 import SignUp from './screens/SignUpScreen';
 import FollowingScreen from './screens/FollowingScreen';
-import ProfileFeedScreen from './screens/ProfileFeedScreen';
-import SelectAvatarScreen from './screens/SelectAvatarScreen';
+import ProfileFeedScreen from './screens/ProfileFeedScreen';    
+import CommentsScreen from './screens/CommentsScreen';
 
 export default function App() {
 
@@ -117,6 +117,15 @@ export default function App() {
           component={ProfileFeedScreen}
           options={{
             title: "Post",
+            headerTransparent: false,
+            headerTintColor: '#000000',
+          }}
+          />
+          <Stack.Screen
+          name="CommentsScreen"
+          component={CommentsScreen}
+          options={{
+            title: "Comments",
             headerTransparent: false,
             headerTintColor: '#000000',
           }}

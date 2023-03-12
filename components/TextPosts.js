@@ -28,7 +28,7 @@ const TextPosts = ({navigation, posts, user}) => {
         posts.forEach(post => {
             console.log("Post");
             //console.log(post.hasOwnProperty("image"));
-            if(! post.hasOwnProperty("image")){
+            if(! post.child.hasOwnProperty("image")){
                 setTextPosts(textPosts => [...textPosts, post])
             }
         });
@@ -47,7 +47,7 @@ const TextPosts = ({navigation, posts, user}) => {
                 return(
                 <View style={styles.containerInsideProfileText}>
                     <Pressable onPress={() => navigation.navigate("ProfileFeedScreen", {item, user})}>
-                        <Text style={styles.quotes}>{item.text}</Text>
+                        <Text style={styles.quotes}>{item.child.text}</Text>
                     </Pressable>
                 </View>
                 );

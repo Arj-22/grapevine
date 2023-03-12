@@ -31,6 +31,7 @@ const PostScreen = ({navigation, route }) => {
 
   const uploadPost = async () =>{
     if (image != null ){
+      
       let filename = image.substring(image.lastIndexOf('/') + 1)
 
       const metadata = {
@@ -183,7 +184,7 @@ const PostScreen = ({navigation, route }) => {
                 }}>
                 <MaterialIcons name="photo-camera" size={35} style={styles.postScreenIcons }/>
               </Pressable>
-              {uploading ? (<Text> {"Uploading " + transferred+"%"}</Text>): null}
+              {uploading ? (<Text style={styles.uploadStatus}> {"Uploading " + transferred+"%"}</Text>): null}
             </View>
             <View style={styles.photoContainer}>
               <Image style={styles.postImagePreview} source={{uri: image}}/>

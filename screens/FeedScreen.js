@@ -11,19 +11,9 @@ const FeedScreen = ({navigation}) => {
 
   const db = getDatabase();
   const userID = getAuth().currentUser.uid; 
-  const [user, setUser] = useState([])
+  const [user, setUser] = useState([]);
   const [posts, setPosts] = useState([]);
-  const [username, setUsername] = useState(""); 
 
-  const getUsername = (id) =>{
-    const userInfo = ref(db, 'users/' + id);
-
-    get(userInfo).then((snapshot) => {
-      if (snapshot.exists()) {
-        //console.log(snapshot.toJSON().username);
-        setUsername(snapshot.toJSON().username);
-      }})
-  }
 
   useEffect(() => {
     const posts = ref(db, 'posts');
@@ -32,8 +22,15 @@ const FeedScreen = ({navigation}) => {
       setPosts([]);
       const data = snapshot.val();
       snapshot.forEach(child => {
-        child.exportVal(); 
-        setPosts(posts => [child.toJSON(), ...posts]);
+        console.log("child");
+        console.log(child.key);
+        var key = child.key; 
+        var post = {
+          key: key,
+          child: child.exportVal()
+        }
+        //child.exportVal(); 
+        setPosts(posts => [post, ...posts]); 
       })
     }) 
 
@@ -55,12 +52,9 @@ const FeedScreen = ({navigation}) => {
               <FlatList
                 data={posts}
                 renderItem={({item}) =>{ 
-                  
-                  var hasPic = item.image != null; 
-                  var hasText = item.text != ""; 
                   return(
                     <View style={styles.containerInsideFeed}>
-                      <PostTile navigation={navigation} item={item} hasPic={hasPic} hasText={hasText} user={user}/>
+                      <PostTile navigation={navigation} item={item} user={user}/>
                     </View>
                   );
               }}

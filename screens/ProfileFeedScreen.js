@@ -15,6 +15,8 @@ const ProfileFeedScreen = ({navigation, route}) => {
   const item = route.params.item;  
   const user = route.params.user;  
 
+  console.log(route.params);
+
   useEffect(() => {
     setPosts([item]); 
 }, []) 
@@ -28,12 +30,11 @@ const ProfileFeedScreen = ({navigation, route}) => {
               <FlatList
                 data={posts}
                 renderItem={({item}) =>{ 
-                  var hasPic = item.image != null; 
-                  var hasText = item.text != ""; 
+
 
                   return(
                     <View style={styles.containerInsideFeed}>
-                      <PostTile navigation={navigation} item={item} hasPic={hasPic} hasText={hasText} user={user}/>
+                      <PostTile navigation={navigation} item={item} user={user}/>
                     </View>
                   );
               }}

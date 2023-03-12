@@ -46,7 +46,11 @@ const OtherProfileScreen = ({navigation, route}) => {
         const posts = ref(db, 'posts/' + child.toJSON().postKey) ;
         get(posts).then((snapshot) => {
           if (snapshot.exists()) {
-            setPosts(posts => [...posts, snapshot.val()]); 
+            var post = {
+              key:  child.toJSON().postKey,
+              child: snapshot.val()
+            }
+            setPosts(posts => [...posts, post]); 
           }}).catch((error) => {
             console.error(error);
           })
@@ -128,7 +132,7 @@ const OtherProfileScreen = ({navigation, route}) => {
           source={require("../assets/rm222-mind-22.jpg")}
           style={styles.background}
           >
-          <ProfileContainer username={user['username']}/>
+          <ProfileContainer user={user}/>
           <View style={styles.containerInsideTopProfile}>
             <View style={styles.profileInfo}>
               <Pressable onPress={() => {navigation.navigate("FollowersScreen", {userID: userID})}}>
@@ -154,14 +158,14 @@ const OtherProfileScreen = ({navigation, route}) => {
               <Tab.Screen name='Pictures' 
                 children={() =>{
                   return(
-                    <ImagePosts navigation={navigation} posts={posts}/>     
+                    <ImagePosts navigation={navigation} posts={posts} user={user}/>     
                   )
               }}
               />
               <Tab.Screen name='Quotes'                 
                 children={() =>{
                   return(
-                    <TextPosts navigation={navigation} posts={posts}/>     
+                    <TextPosts navigation={navigation} posts={posts} user={user}/>     
                   )
               }}/>
             </Tab.Navigator>

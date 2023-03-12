@@ -190,6 +190,7 @@ export default styles = StyleSheet.create({
     chatAvatar:{
       height: 40, 
       width: 40,
+      borderRadius: 50, 
     },
     chatUsername: {
       paddingLeft: 10,
@@ -302,6 +303,11 @@ export default styles = StyleSheet.create({
     },   
     quotes:{
       fontSize: 15,
+    }, 
+
+    uploadStatus: {
+      fontSize: 20,
+      paddingBottom: 5,
     }
     
   });
