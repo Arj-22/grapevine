@@ -308,6 +308,14 @@ export default styles = StyleSheet.create({
     uploadStatus: {
       fontSize: 20,
       paddingBottom: 5,
+    },
+    saveAvatar: {
+      backgroundColor: "#D591F2",
+      justifyContent: 'center', 
+      borderRadius: 4,
+      paddingHorizontal: 10,
+      paddingVertical: 5,
+      marginBottom: 10,
     }
     
   });

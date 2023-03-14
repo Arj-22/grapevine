@@ -127,7 +127,10 @@ const ProfileContainer = ({user}) => {
       const renderSaveButton = () =>{
         return (
             <Pressable onPress={() => uploadAvatar()}>
-                <Text>Save</Text>
+              <View style={styles.saveAvatar}>
+              <Text style={styles.buttonText}>Save</Text>
+              </View>
+                
             </Pressable>
         )
       }

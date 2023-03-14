@@ -29,10 +29,11 @@ const PostScreen = ({navigation, route }) => {
   const db = getDatabase();  
 
 
+
   const uploadPost = async () =>{
     if (image != null ){
-      
-      let filename = image.substring(image.lastIndexOf('/') + 1)
+
+      let filename = image.substring(image.lastIndexOf('/') + 1); 
 
       const metadata = {
         contentType: 'image/jpeg'

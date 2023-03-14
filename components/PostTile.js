@@ -1,10 +1,9 @@
 import { StatusBar } from 'expo-status-bar';
 import styles from '../style';
 import {Text, View, TextInput, Button, Pressable, Image, ImageBackground, FlatList} from 'react-native'; 
-import { EvilIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { getAuth } from "firebase/auth";
-import { getDatabase, ref, onValue, child, get, push, remove} from "firebase/database";
+import { getDatabase, ref, onValue, child, get, push, remove, set, orderByChild} from "firebase/database";
 import { useState, useEffect } from 'react';
 
 
@@ -39,6 +38,24 @@ const PostTile = ({navigation, item, user}) => {
             if (snapshot.exists()) {
                 setPostUser(snapshot.val());
             }})
+
+
+            get(likeRef).then((snapshot) => {
+                if (snapshot.exists()) {
+                    snapshot.forEach(child =>{
+                        console.log("child use effect ")
+                        console.log(child.key); 
+                        if(child.val() == currentUserID){
+                            setLiked(true); 
+                        }
+                    })
+                }}).catch((error)=>{
+                    console.log(error);
+                })
+
+
+
+        
     }, [])
 
 
@@ -46,12 +63,21 @@ const PostTile = ({navigation, item, user}) => {
     const handleLike = () =>{
         if(liked == true){
             setLiked(false);
-            //push(likeRef, {likedBy: currentUserID}); 
-            //push(currentFollowingRef, {followingId: userID}); 
-            remove(likeRef,{likedBy: currentUserID});
+            get(likeRef).then((snapshot) => {
+                if (snapshot.exists()) {
+                    snapshot.forEach(child =>{
+                        console.log(child.key); 
+                        if(child.val() == currentUserID){
+                            var removeRef = ref(db, "likes/" + item.key+ "/"+child.key); 
+                           remove(removeRef, currentUserID);
+                        }
+                    })
+                }}).catch((error)=>{
+                    console.log(error);
+                })
         }else if(liked == false){
             setLiked(true)
-            push(likeRef, {likedBy: currentUserID}); 
+            push(likeRef, currentUserID); 
         }
         
     }

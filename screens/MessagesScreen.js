@@ -14,13 +14,11 @@ const MessagesScreen  = ({navigation}) => {
   const [currentUser, setCurrentUser] = useState([]);
   const socket = io('http://' + helpers.ip + ":" + helpers.port);
 
-
   useEffect(() => {
     const chats = ref(db, 'user-chats/' + userID);
 
     onValue(chats, (snapshot) =>{
       setChats([]);
-      //console.log(snapshot.val());
       snapshot.forEach(child => {
         const chatKey = child.toJSON().chatKey; 
         const chats = ref(db, 'chats/' + chatKey);
@@ -31,7 +29,6 @@ const MessagesScreen  = ({navigation}) => {
           }]);
         })
       })
-        
       })
 
     const userInfo = ref(db, 'users/' + userID);
@@ -76,7 +73,6 @@ const MessagesScreen  = ({navigation}) => {
       </ImageBackground>
     </View>
       
-    
     );
   }
 

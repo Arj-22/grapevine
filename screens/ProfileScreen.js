@@ -41,7 +41,6 @@ const ProfileScreen = ({navigation}) => {
     onValue(userPosts, (snapshot) =>{
       setPosts([]);   
       snapshot.forEach(child => { 
-        //child.exportVal(); 
         const posts = ref(db, 'posts/' + child.toJSON().postKey) ;
         get(posts).then((snapshot) => {
           if (snapshot.exists()) {
