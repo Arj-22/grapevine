@@ -1,4 +1,4 @@
 export const helpers = { 
-    ip: "172.16.3.101",
+    ip: "10.130.52.165",
     port: "3000"
 }

@@ -43,11 +43,12 @@ const FollowingScreen = ({navigation, route}) => {
             <FlatList
                 data={following}
                 renderItem={({item}) =>{ 
+                  console.log(item); 
                   return(
                     <View style={styles.containerInsideChats}>
                         <View style={styles.chat}>
                           <View style={styles.chatHeading}>
-                            <Image source={require("../assets/grape.png")} style={styles.chatAvatar}/>
+                            <Image source={{uri: item.avatar}} style={styles.chatAvatar}/>
                             <Text style={styles.chatUsername}>{item.username}</Text>
                           </View>
                         </View>

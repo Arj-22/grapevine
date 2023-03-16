@@ -52,6 +52,8 @@ const PostTile = ({navigation, item, user}) => {
         const userInfo = ref(db, 'users/' + item.child.userId);
         get(userInfo).then((snapshot) => {
             if (snapshot.exists()) {
+                console.log("postuser")
+                console.log(snapshot.val())
                 setPostUser(snapshot.val());
             }})
 

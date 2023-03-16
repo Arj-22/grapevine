@@ -53,6 +53,8 @@ const MessagesScreen  = ({navigation}) => {
                 data={chats}
                 renderItem={({item}) =>{ 
                   var status = item.chat.users[0] == currentUser.username;
+                  console.log(item.chat.avatars[0]); 
+                  console.log(currentUser.avatar); 
                   return(
                     <View style={styles.containerInsideChats}>
                       <Pressable style={styles.chat} onPress={() =>{
