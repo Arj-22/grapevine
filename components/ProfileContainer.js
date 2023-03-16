@@ -9,10 +9,11 @@ import * as ImagePicker from 'expo-image-picker';
 import { getStorage, ref, uploadBytesResumable, getDownloadURL, deleteObject} from 'firebase/storage';
 
 
-const ProfileContainer = ({user}) => {
+const ProfileContainer = ({user, otherProfile}) => {
 
     const [image, setImage] = useState(null);
     const [save, setSave] = useState(false)
+    const [cantChangeAvatar] = useState(otherProfile); 
     const [uploading, setUploading] = useState(false); 
     const [transferred, setTransferred] = useState(0);
 
@@ -143,7 +144,7 @@ const ProfileContainer = ({user}) => {
 
     return (
         <View style={styles.profileTopContainer}>
-            <Pressable onPress={() => {pickImage()}}>
+            <Pressable onPress={() => {cantChangeAvatar ? null : pickImage()}}>
                 <Image source={image ? {uri: image} : {uri: user.avatar}} style={styles.avatarProfile}/>
             </Pressable>
             {save ? renderSaveButton() : null }

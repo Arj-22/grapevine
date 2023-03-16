@@ -132,7 +132,7 @@ const OtherProfileScreen = ({navigation, route}) => {
           source={require("../assets/rm222-mind-22.jpg")}
           style={styles.background}
           >
-          <ProfileContainer user={user}/>
+          <ProfileContainer user={user} otherProfile={true}/>
           <View style={styles.containerInsideTopProfile}>
             <View style={styles.profileInfo}>
               <Pressable onPress={() => {navigation.navigate("FollowersScreen", {userID: userID})}}>
