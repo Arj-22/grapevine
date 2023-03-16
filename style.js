@@ -316,6 +316,12 @@ export default styles = StyleSheet.create({
       paddingHorizontal: 10,
       paddingVertical: 5,
       marginBottom: 10,
+    },
+    likesContainer: {
+      margin: 10
+    },
+    likesNumber: {
+      fontSize: 15, 
     }
     
   });

@@ -13,6 +13,7 @@ const PostTile = ({navigation, item, user}) => {
     const hasText = item.child.text != ""; 
 
     const [liked, setLiked] = useState(false); 
+    const [likes, setLikes] = useState([]); 
     const db = getDatabase(); 
 
     const [postUser, setPostUser] = useState([]); 
@@ -29,7 +30,22 @@ const PostTile = ({navigation, item, user}) => {
         }
     }
 
-    console.log(user);
+    const showLikes = () =>{
+        if(likes.length == 1){
+            return(
+                <Text style={styles.likesNumber}>{likes.length + " "}like</Text>
+            )
+        }else if(likes.length == 0){
+            return(
+                null
+            )
+        }
+        else{
+            return(
+                <Text style={styles.likesNumber}>{likes.length + " "}likes</Text>
+            )
+        }
+    }
 
     
     useEffect(()=>{
@@ -40,21 +56,29 @@ const PostTile = ({navigation, item, user}) => {
             }})
 
 
-            get(likeRef).then((snapshot) => {
-                if (snapshot.exists()) {
-                    snapshot.forEach(child =>{
-                        console.log("child use effect ")
-                        console.log(child.key); 
-                        if(child.val() == currentUserID){
-                            setLiked(true); 
-                        }
-                    })
-                }}).catch((error)=>{
-                    console.log(error);
+        get(likeRef).then((snapshot) => {
+            if (snapshot.exists()) {
+                snapshot.forEach(child =>{
+                    if(child.val() == currentUserID){
+                        setLiked(true); 
+                    }
                 })
+            }}).catch((error)=>{
+                console.log(error);
+            })
 
 
-
+            onValue(likeRef, (snapshot) =>{
+                setLikes([]); 
+                const data = snapshot;
+                snapshot.forEach(child => {
+                  console.log("child");
+                  console.log(child.key);
+                  var key = child.key; 
+                  //child.exportVal(); 
+                  setLikes(likes => [key, ...likes]); 
+                })
+              }) 
         
     }, [])
 
@@ -102,8 +126,12 @@ const PostTile = ({navigation, item, user}) => {
             <Pressable onPress={() => navigation.navigate("CommentsScreen", {item})}>
                 <AntDesign name="message1" size={30} color="black" />
             </Pressable>
-        
+
         </View>
+        <View style={styles.likesContainer}>
+            {showLikes()}
+        </View>
+
     </View>
     );
   }

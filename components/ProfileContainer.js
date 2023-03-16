@@ -6,7 +6,7 @@ import { getDatabase, refFromURL, onValue, child, get, set} from "firebase/datab
 import { useState, useEffect } from 'react';
 import * as ImagePicker from 'expo-image-picker';
 
-import { getStorage, ref, uploadBytesResumable, getDownloadURL} from 'firebase/storage';
+import { getStorage, ref, uploadBytesResumable, getDownloadURL, deleteObject} from 'firebase/storage';
 
 
 const ProfileContainer = ({user}) => {
@@ -31,6 +31,12 @@ const ProfileContainer = ({user}) => {
     console.log(user); 
 
     const uploadAvatar = async () =>{
+      var deleteRef = ref(storage, user.avatar)
+        deleteObject(deleteRef).then(() => {
+          console.log("deleted")
+        }).catch((error) => {
+          console.log(error)
+      });
         if (image != null ){
           let filename = image.substring(image.lastIndexOf('/') + 1)
     
@@ -125,12 +131,12 @@ const ProfileContainer = ({user}) => {
       }
 
       const renderSaveButton = () =>{
+
         return (
             <Pressable onPress={() => uploadAvatar()}>
               <View style={styles.saveAvatar}>
               <Text style={styles.buttonText}>Save</Text>
               </View>
-                
             </Pressable>
         )
       }
@@ -141,6 +147,7 @@ const ProfileContainer = ({user}) => {
                 <Image source={image ? {uri: image} : {uri: user.avatar}} style={styles.avatarProfile}/>
             </Pressable>
             {save ? renderSaveButton() : null }
+            {uploading ? (<Text style={styles.uploadStatus}> {"Uploading " + transferred+"%"}</Text>): null}
             <Text style={styles.usernameText}>{user.username}</Text>
         </View>
     );
