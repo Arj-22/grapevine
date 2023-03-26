@@ -52,11 +52,14 @@ const CreateChatScreen = ({navigation}) => {
     onValue(users, (snapshot) =>{
       const data = snapshot.val();
       snapshot.forEach(child => { 
-        const user = {
-          id: child.key,
-          user: child.toJSON()
+        if(child.key != userID){
+          const user = {
+            id: child.key,
+            user: child.toJSON()
+          }
+          setUsers(users => [...users, user]);
         }
-        setUsers(users => [...users, user]);
+
       })
     }) 
 

@@ -20,16 +20,14 @@ const FeedScreen = ({navigation}) => {
     
     onValue(posts, (snapshot) =>{
       setPosts([]);
-      const data = snapshot.val();
+      //const data = snapshot.val();
       snapshot.forEach(child => {
-        console.log("child");
-        console.log(child.key);
+
         var key = child.key; 
         var post = {
           key: key,
           child: child.exportVal()
         }
-        //child.exportVal(); 
         setPosts(posts => [post, ...posts]); 
       })
     }) 

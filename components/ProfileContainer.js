@@ -21,15 +21,12 @@ const ProfileContainer = ({user, otherProfile}) => {
 
     const db = getDatabase();  
     const userID = getAuth().currentUser.uid; 
-    //setImage(user.avatar);
 
     useEffect(()=>{
         console.log("profile container")
         setImage(user.avatar);
     }, [])  
 
-    console.log("user"); 
-    console.log(user); 
 
     const uploadAvatar = async () =>{
       var deleteRef = ref(storage, user.avatar)

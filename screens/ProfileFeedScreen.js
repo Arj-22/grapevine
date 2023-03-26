@@ -15,7 +15,9 @@ const ProfileFeedScreen = ({navigation, route}) => {
   const item = route.params.item;  
   const user = route.params.user;  
 
-  console.log(route.params);
+
+  console.log("Profile Feed Screen");
+  console.log(user);
 
   useEffect(() => {
     setPosts([item]); 
@@ -30,8 +32,6 @@ const ProfileFeedScreen = ({navigation, route}) => {
               <FlatList
                 data={posts}
                 renderItem={({item}) =>{ 
-
-
                   return(
                     <View style={styles.containerInsideFeed}>
                       <PostTile navigation={navigation} item={item} user={user}/>

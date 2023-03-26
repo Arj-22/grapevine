@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import styles from '../style';
-import {Text, View, TextInput, Button, Pressable, Image, ImageBackground, FlatList} from 'react-native'; 
+import {Text, View, TextInput, Button, Pressable, Image, ImageBackground, FlatList, RefreshControl} from 'react-native'; 
 import { AntDesign } from '@expo/vector-icons';
 import { getAuth } from "firebase/auth";
 import { getDatabase, ref, onValue, child, get, push, remove, set, orderByChild} from "firebase/database";
@@ -20,6 +20,8 @@ const PostTile = ({navigation, item, user}) => {
     const currentUserID = getAuth().currentUser.uid;
 
     const likeRef = ref(db, "likes/" + item.key)
+
+    const postRef = ref(db, "posts/" + item.key)
 
     const showText = (hasText, item) =>{
         console.log(hasText);
@@ -77,7 +79,6 @@ const PostTile = ({navigation, item, user}) => {
                   console.log("child");
                   console.log(child.key);
                   var key = child.key; 
-                  //child.exportVal(); 
                   setLikes(likes => [key, ...likes]); 
                 })
               }) 
@@ -94,7 +95,7 @@ const PostTile = ({navigation, item, user}) => {
                     snapshot.forEach(child =>{
                         console.log(child.key); 
                         if(child.val() == currentUserID){
-                            var removeRef = ref(db, "likes/" + item.key+ "/"+child.key); 
+                            var removeRef = ref(db, "likes/" + item.key+ "/" + child.key); 
                            remove(removeRef, currentUserID);
                         }
                     })
@@ -126,9 +127,8 @@ const PostTile = ({navigation, item, user}) => {
                 <AntDesign name={liked ? "heart": "hearto"} size={30} color="black" style={{paddingRight: 15}}/>
             </Pressable>
             <Pressable onPress={() => navigation.navigate("CommentsScreen", {item})}>
-                <AntDesign name="message1" size={30} color="black" />
+                <AntDesign name="message1" size={30} color="black" style={{paddingRight: 15}}/>
             </Pressable>
-
         </View>
         <View style={styles.likesContainer}>
             {showLikes()}

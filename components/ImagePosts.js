@@ -11,15 +11,6 @@ import { useState, useEffect } from 'react';
 
 const ImagePosts = ({navigation, posts, user}) => {
 
-
-    
-    console.log("props")
-    //console.log(posts);
-    console.log(posts);
-
-    //console.log(props)
-    // const posts = props
-
     const [tab, setTab] = useState(true); 
     const [imagePosts, setImagePosts] = useState([]); 
 
@@ -27,14 +18,11 @@ const ImagePosts = ({navigation, posts, user}) => {
     const sortPosts = () =>{
         setImagePosts([]);
         posts.forEach(post => {
-            console.log("Post");
-            //console.log(post.hasOwnProperty("image"));
             if(post.child.hasOwnProperty("image")){
                 setImagePosts(imagePosts => [...imagePosts, post])
             }
         });
     }
-
     useEffect(() =>{ 
         sortPosts(); 
     }, [posts] )
@@ -50,7 +38,6 @@ const ImagePosts = ({navigation, posts, user}) => {
                 <View style={styles.containerInsideProfile}>
                     <Pressable onPress={() => navigation.navigate("ProfileFeedScreen", {item, user})}>
                         <View style={styles.postProfile}>
-                            {/* <Text style={hasText ? styles.postProfileText : null}>{item.text}</Text>   */}
                             <Image source={{uri: item.child.image}} style={styles.postProfileImage}/>
                         </View>
                     </Pressable>

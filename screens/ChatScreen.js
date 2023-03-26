@@ -6,12 +6,17 @@ import { getDatabase, ref, onValue, child, get, push, update} from "firebase/dat
 import { useEffect, useState } from 'react';
 import  io  from 'socket.io-client';
 import { helpers } from "../utils/helpers"
+import * as Notifications from 'expo-notifications';
 
 
 const ChatScreen  = ({navigation, route}) => {
   const [message, setMessage] = useState(""); 
   const [chat, setChat] = useState([]); 
   const [user, setUser] = useState([]); 
+
+
+
+  
   const userID = getAuth().currentUser.uid; 
   const db = getDatabase();
   const socket = io('http://' + helpers.ip + ":" + helpers.port);
@@ -19,6 +24,7 @@ const ChatScreen  = ({navigation, route}) => {
   const currentUsername = user["username"];  
   var today = new Date();
   var time = today.getHours() + ":" + today.getMinutes()
+
 
 
   useEffect(() => {
