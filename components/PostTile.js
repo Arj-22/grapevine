@@ -53,9 +53,8 @@ const PostTile = ({navigation, item, user}) => {
     useEffect(()=>{
         const userInfo = ref(db, 'users/' + item.child.userId);
         get(userInfo).then((snapshot) => {
+            //get the user who the post belongs to 
             if (snapshot.exists()) {
-                console.log("postuser")
-                console.log(snapshot.val())
                 setPostUser(snapshot.val());
             }})
 
@@ -63,6 +62,7 @@ const PostTile = ({navigation, item, user}) => {
         get(likeRef).then((snapshot) => {
             if (snapshot.exists()) {
                 snapshot.forEach(child =>{
+                    //check if logged in user has liked the post
                     if(child.val() == currentUserID){
                         setLiked(true); 
                     }
@@ -74,10 +74,8 @@ const PostTile = ({navigation, item, user}) => {
 
             onValue(likeRef, (snapshot) =>{
                 setLikes([]); 
-                const data = snapshot;
+                // set the number of like that the post has 
                 snapshot.forEach(child => {
-                  console.log("child");
-                  console.log(child.key);
                   var key = child.key; 
                   setLikes(likes => [key, ...likes]); 
                 })
@@ -91,10 +89,12 @@ const PostTile = ({navigation, item, user}) => {
         if(liked == true){
             setLiked(false);
             get(likeRef).then((snapshot) => {
+                // go through all likes for the post
                 if (snapshot.exists()) {
                     snapshot.forEach(child =>{
                         console.log(child.key); 
                         if(child.val() == currentUserID){
+                            // check if the user logged in has liked the post 
                             var removeRef = ref(db, "likes/" + item.key+ "/" + child.key); 
                            remove(removeRef, currentUserID);
                         }

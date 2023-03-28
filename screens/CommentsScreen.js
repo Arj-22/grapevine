@@ -15,8 +15,10 @@ const CommentsScreen  = ({navigation, route}) => {
   const key = route.params.item.key;  
   
   const currentUsername = user["username"];  
+  
   var today = new Date();
   var time = today.getHours() + ":" + today.getMinutes()
+
   const userInfo = ref(db, 'users/' + userID);
   const commentsRef = ref(db, 'post-comments/' + key );
 

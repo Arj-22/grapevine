@@ -6,7 +6,6 @@ import { getDatabase, ref, onValue, child, get, push, update} from "firebase/dat
 import { useEffect, useState } from 'react';
 import  io  from 'socket.io-client';
 import { helpers } from "../utils/helpers"
-import * as Notifications from 'expo-notifications';
 
 
 const ChatScreen  = ({navigation, route}) => {
@@ -90,10 +89,8 @@ const ChatScreen  = ({navigation, route}) => {
             <FlatList
                 data={chat}
                 inverted
-                //keyExtractor={(e) => e.userId.toString()}
                 renderItem={({item}) =>{ 
                   var status = item.username == currentUsername;
-                  //console.log(item); 
                   return(
                     <View style={styles.containerInsideChatScreen}>
                         <Text style={status ? styles.messageSent: styles.message}>{item.message}</Text>

@@ -39,7 +39,10 @@ const PostScreen = ({navigation, route }) => {
         contentType: 'image/jpeg'
       };
 
+      // fetch the image 
       let response = await fetch(image);
+
+      //turn into blob as this is what firebase accepts 
       let blob = await response.blob();
 
       setUploading(true)
@@ -47,8 +50,10 @@ const PostScreen = ({navigation, route }) => {
       const uploadTask = uploadBytesResumable(storageRef, blob, metadata);
       try{
           uploadTask.on("state_changed", (snapshot) =>{
+            // calculate upload %
             const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
             console.log('Upload is ' + progress + '% done');
+            // round it off
             setTransferred(Math.ceil(progress)); 
             
 
@@ -86,6 +91,7 @@ const PostScreen = ({navigation, route }) => {
     }
 
     }else{
+      // when there is no image 
       const postRef = refFromURL(db, "https://the-grapevine-9937b-default-rtdb.firebaseio.com/posts/");
       var postKey = push(postRef, {
         image: null,
@@ -104,6 +110,8 @@ const PostScreen = ({navigation, route }) => {
 
 
   const post = (downloadURL) =>{
+
+    // realtime DB
     const postRef = refFromURL(db, "https://the-grapevine-9937b-default-rtdb.firebaseio.com/posts/");
     var postKey = push(postRef, {
       image: downloadURL,
@@ -112,6 +120,8 @@ const PostScreen = ({navigation, route }) => {
       username: user["username"]
     }).key;
 
+    // push to user-posts so that you can get posts for a specific user
+    // only the key is pushed 
     push(refFromURL(db, 'https://the-grapevine-9937b-default-rtdb.firebaseio.com/user-posts/' + userID), {
       postKey
     }).then(navigation.navigate("IndexScreen")).catch((error) =>{

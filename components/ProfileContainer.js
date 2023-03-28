@@ -89,20 +89,6 @@ const ProfileContainer = ({user, otherProfile}) => {
           console.log(error);
         }
     
-        }else{
-        //   const postRef = refFromURL(db, "https://the-grapevine-9937b-default-rtdb.firebaseio.com/users/");
-        //   var postKey = push(postRef, {
-        //     image: null,
-        //     text: text,
-        //     userId: userID,
-        //     username: user["username"]
-        //   }).key;
-      
-        //   push(refFromURL(db, 'https://the-grapevine-9937b-default-rtdb.firebaseio.com/user-posts/' + userID), {
-        //     postKey
-        //   }).then(navigation.navigate("IndexScreen")).catch((error) =>{
-        //     console.log(error.code); 
-        //   });
         }
       };
 

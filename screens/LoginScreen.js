@@ -10,12 +10,17 @@ const LoginScreen = ({navigation}) => {
     const [email, setEmail] = useState(""); 
     const [password, setPassword] = useState(""); 
     const [error, setError] = useState(""); 
+
+    // auth object keeps track of user staus
     const auth = getAuth(app)
 
 
     useEffect(() =>{
+      //check if user is logged in 
       const unsubscribe = auth.onAuthStateChanged(user =>{
         if(user){
+          //if user is logged in go to index screen
+          //this also means user does not have to log in every time
           navigation.replace("IndexScreen", {url: null}); 
         }
       })
@@ -75,7 +80,7 @@ const LoginScreen = ({navigation}) => {
 
           <Pressable 
             style={styles.button} 
-            onPress={handleLogin}>
+            onPress={()=>handleLogin()}>
             <Text style={styles.buttonText}>Login</Text>
           </Pressable>
 

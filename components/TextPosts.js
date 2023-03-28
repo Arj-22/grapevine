@@ -11,15 +11,6 @@ import { useState, useEffect } from 'react';
 
 const TextPosts = ({navigation, posts, user}) => {
 
-    console.log("props")
-    //console.log(posts);
-    console.log(posts);
-
-    //console.log(props)
-    // const posts = props
-
-    const [tab, setTab] = useState(true); 
-    //const [imagePosts, setImagePosts] = useState([]); 
     const [textPosts, setTextPosts] = useState([]); 
 
 
@@ -27,7 +18,6 @@ const TextPosts = ({navigation, posts, user}) => {
         setTextPosts([]);
         posts.forEach(post => {
             console.log("Post");
-            //console.log(post.hasOwnProperty("image"));
             if(! post.child.hasOwnProperty("image")){
                 setTextPosts(textPosts => [...textPosts, post])
             }

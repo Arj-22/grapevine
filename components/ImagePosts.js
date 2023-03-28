@@ -11,7 +11,6 @@ import { useState, useEffect } from 'react';
 
 const ImagePosts = ({navigation, posts, user}) => {
 
-    const [tab, setTab] = useState(true); 
     const [imagePosts, setImagePosts] = useState([]); 
 
 

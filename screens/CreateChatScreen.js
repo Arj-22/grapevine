@@ -24,7 +24,6 @@ const CreateChatScreen = ({navigation}) => {
     const chatRef = ref(db, 'chats/');
 
     var chatKey = push(chatRef, {
-      image: "",
       users: [currentUser.username, secondUsername],
       avatars: [currentUser.avatar, user.user.avatar]
     }).key; 

@@ -40,10 +40,12 @@ const SignUp = ({navigation}) => {
 
 
     const handleSignUp = ()=>{
+      // create user in authentication DB
       createUserWithEmailAndPassword(auth, email, password).then((userCredential) =>{
-        const user = userCredential.user; 
+        const user = userCredential.user;
+        // add details to realtime DB 
         set(ref(db, 'users/' + user.uid), {
-          avatar: "https://firebasestorage.googleapis.com/v0/b/the-grapevine-9937b.appspot.com/o/avatars%2Favatar2.png?alt=media&token=70d4eb7f-be28-4e0b-9ab2-a9237048976c",
+          avatar: "https://firebasestorage.googleapis.com/v0/b/the-grapevine-9937b.appspot.com/o/avatars%2Favatar.png?alt=media&token=ff314e5f-a6b1-4db2-9d6d-610f47006014",
           username: username,
           firstName: firstName,
           lastName: lastName,
@@ -52,6 +54,7 @@ const SignUp = ({navigation}) => {
         console.log(user.email); 
       }).catch((error) =>{
         console.log(error.code); 
+        // will check if email is valid 
         setError("Form not filled out correctly"); 
       }); 
     }
